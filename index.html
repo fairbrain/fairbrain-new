@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FairBrain - Your One Stop Creative Source</title>
+
+    <!-- Google Fonts: Poppins -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="assets/css/style.css">
+
+    <!-- Swiper CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+
+    <!-- Fancybox CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.css" />
+
+    <!-- Tailwind CSS (CDN) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Poppins', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            purple: '#6B409E',
+                            purpleLight: '#8A5FB8',
+                            orange: '#F98616',
+                            yellow: '#FFCA2C',
+                            dark: '#333333',
+                            gray: '#F3F4F6'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/gsap.min.js"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/SplitText.min.js"></script>
+
+</head>
+
+<body class="font-sans text-brand-dark antialiased bg-white overflow-x-hidden">
+    <!-- Header -->
+    <header class="w-full bg-white shadow-sm sticky top-0 z-50 text-agency" id="header">
+        <div class="container mx-auto px-4 lg:px-8 py-3 flex items-center justify-between">
+            <!-- Logo -->
+            <div class="flex items-center gap-2">
+                <img src="assets/images/logo/Fairbrain Logo PNG.png" width="300" height="150" alt="FairBrain Logo"
+                    class="w-40 heartbeat logo">
+            </div>
+
+            <!-- Navbar -->
+            <nav class="hidden md:flex space-x-6 lg:space-x-8 font-medium text-sm lg:text-base">
+                <a href="index.html" class="text-brand-orange border-b-2 border-brand-orange transition-colors">Home</a>
+                <a href="about.html" class="text-brand-dark hover:text-brand-orange transition-colors">About Us</a>
+                <a href="gallery.html" class="text-brand-dark hover:text-brand-orange transition-colors">Web Design</a>
+                <a href="service.html" class="text-brand-dark hover:text-brand-orange transition-colors">Services</a>
+                <a href="portfolio.html" class="text-brand-dark hover:text-brand-orange transition-colors">Portfolio</a>
+                <a href="contact.html" class="text-brand-dark hover:text-brand-orange transition-colors">Contact Us</a>
+            </nav>
+
+            <!-- Login / Mobile Menu -->
+            <div class="flex items-center gap-4">
+                <button onclick="window.location.href='login.html'"
+                    class="login bg-brand-dark hover:bg-black text-white px-5 py-2.5 rounded-md font-semibold text-sm transition-colors flex items-center gap-2 shadow-sm">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
+                        stroke="currentColor" class="w-5 h-5">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
+                    </svg>
+                    <span>Login</span>
+                </button>
+                <button class="md:hidden text-brand-dark p-2" id="mobile-menu-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                        stroke="currentColor" class="w-6 h-6">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Menu Overlay -->
+    <div id="mobile-menu"
+        class="fixed inset-y-0 right-0 z-[100] w-64 bg-white shadow-2xl transform translate-x-full transition-transform duration-300 md:hidden flex flex-col items-center pt-8 border-l border-brand-orange/20">
+        <button id="close-mobile-menu" class="absolute top-6 right-6 text-brand-dark hover:text-brand-orange">
+            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+            </svg>
+        </button>
+        <div class="flex flex-col gap-6 w-full text-center px-4 mt-8">
+            <a href="index.html"
+                class="text-brand-dark hover:text-brand-orange text-lg font-bold border-b pb-2">Home</a>
+            <a href="about.html" class="text-brand-dark hover:text-brand-orange text-lg font-bold border-b pb-2">About
+                Us</a>
+            <a href="gallery.html" class="text-brand-dark hover:text-brand-orange text-lg font-bold border-b pb-2">Web
+                Design</a>
+            <a href="service.html"
+                class="text-brand-dark hover:text-brand-orange text-lg font-bold border-b pb-2">Services</a>
+            <a href="portfolio.html"
+                class="text-brand-dark hover:text-brand-orange text-lg font-bold border-b pb-2">Portfolio</a>
+            <a href="contact.html" class="text-brand-dark hover:text-brand-orange text-lg font-bold">Contact Us</a>
+            <button onclick="window.location.href='login.html'"
+                class="bg-gradient-to-r from-brand-orange to-brand-yellow text-white px-6 py-3 rounded-md font-semibold mt-4 shadow-md w-full">Login
+                Account</button>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Hero Section -->
+        <section class="bg-hero-pattern relative overflow-hidden text-agency" id="hero-section">
+            <!-- Swiper Container -->
+            <div class="swiper hero-swiper w-full h-full pt-10 lg:pt-20 container mx-auto px-4">
+                <div class="swiper-wrapper">
+                    <!-- Slide 1 -->
+                    <div class="swiper-slide w-full">
+                        <div
+                            class="container mx-auto flex md:flex-row flex-col justify-center px-4 lg:px-8 relative z-10 flex md:flex-row flex-col items-center gap-10">
+
+                            <!-- Segment 1: Heading -->
+                            <div class="text-center lg:text-left head-1">
+                                <h2
+                                    class="text-3xl md:text-4xl lg:text-[3rem] leading-[1.5] font-extrabold text-brand-dark whitespace-nowrap">
+                                    Kolkata's <span
+                                        class="bg-gradient-to-r from-brand-orange to-brand-yellow text-white px-3 py-1 rounded inline-block text-3xl md:text-4xl lg:text-[3rem] align-middle shadow-lg transform -rotate-2 py-2">NO.1</span><br>
+                                    Branding <span
+                                        class="text-transparent pe-2 bg-clip-text bg-gradient-to-r from-brand-purple to-brand-purpleLight italic font-light text-[3rem] text-vartigo">Agency</span>
+                                </h2>
+                            </div>
+
+                            <!-- Segment 2: Context Box -->
+                            <div class="flex justify-center head-2">
+                                <div
+                                    class="bg-white p-6 rounded border border-orange-100 shadow inline-block w-full max-w-md relative mt-4 lg:mt-0">
+                                    <div class="absolute -top-3 -left-3 w-6 h-6 bg-brand-yellow rounded shadow-md z-20">
+                                    </div>
+                                    <div
+                                        class="absolute -top-3 -right-3 w-6 h-6 bg-brand-purple rounded shadow-md z-20">
+                                    </div>
+                                    <div
+                                        class="absolute -bottom-3 -left-3 w-6 h-6 bg-brand-purple rounded shadow-md z-20">
+                                    </div>
+                                    <div
+                                        class="absolute -bottom-3 -right-3 w-6 h-6 bg-brand-yellow rounded shadow-md z-20">
+                                    </div>
+                                    <p
+                                        class="text-gray-700 text-[12px] md:text-base font-semibold leading-relaxed text-center">
+                                        When it comes to building your brand, <span class="font-bold">FAIRBRAIN</span>
+                                        is the all in one solution to get started! FAIRBRAIN believe in creating brands
+                                        with <span class="font-bold text-brand-orange">STRATEGY & CONCEPT</span>
+                                    </p>
+                                </div>
+                            </div>
+
+                            <!-- Segment 3: Tagline & Graphic -->
+                            <div class="relative mt-12 lg:mt-0 flex justify-center lg:justify-end head-3">
+                                <div class="text-center md:text-right relative inline-block">
+                                    <h3 class="text-xl xl:text-2xl font-bold text-brand-orange mb-2 relative z-10">Your
+                                        'ONE STOP' <br> <span
+                                            class="text-brand-purple font-light text-lg lg:text-3xl xl:text-3xl">Creative
+                                            Source</span></h3>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!-- Slide 2 (Duplicate for demo) -->
+                    <div class="swiper-slide w-full">
+                        <div
+                            class="container mx-auto flex md:flex-row flex-col justify-center px-4 lg:px-8 relative z-10 flex md:flex-row flex-col items-center gap-10">
+
+                            <!-- Segment 1: Heading -->
+                            <div class="text-center lg:text-left head-1">
+                                <h2
+                                    class="text-3xl md:text-4xl lg:text-[3rem] font-extrabold text-brand-dark leading-tight whitespace-nowrap">
+                                    Global <span
+                                        class="bg-gradient-to-r from-brand-purple to-brand-purple/50 text-white px-3 py-1 rounded inline-block text-2xl md:text-3xl lg:text-[3rem] align-middle shadow-lg transform rotate-2 py-2">REACH</span><br>
+                                    Premium <span
+                                        class="text-transparent bg-clip-text bg-gradient-to-r from-brand-orange to-brand-yellow italic font-light text-[3rem] text-vartigo">Designs</span>
+                                </h2>
+                            </div>
+
+                            <!-- Segment 2: Context Box -->
+                            <div class="flex justify-center head-2">
+                                <div
+                                    class="bg-white p-6 rounded border border-purple-100 shadow inline-block w-full max-w-md relative mt-4 lg:mt-0">
+                                    <div class="absolute -top-3 -left-3 w-6 h-6 bg-brand-yellow rounded shadow-md z-20">
+                                    </div>
+                                    <div
+                                        class="absolute -top-3 -right-3 w-6 h-6 bg-brand-purple rounded shadow-md z-20">
+                                    </div>
+                                    <div
+                                        class="absolute -bottom-3 -left-3 w-6 h-6 bg-brand-purple rounded shadow-md z-20">
+                                    </div>
+                                    <div
+                                        class="absolute -bottom-3 -right-3 w-6 h-6 bg-brand-yellow rounded shadow-md z-20">
+                                    </div>
+                                    <p
+                                        class="text-gray-700 text-sm md:text-base font-semibold leading-relaxed text-center">
+                                        Transform your business identity entirely! We help our clients achieve maximum
+                                        market visibility with <span class="font-bold text-brand-purple">INNOVATIVE
+                                            THINKING</span>
+                                    </p>
+                                </div>
+                            </div>
+
+                            <!-- Segment 3: Tagline & Graphic -->
+                            <div
+                                class="col-span-1 lg:col-span-1 relative mt-12 lg:mt-0 flex justify-center lg:justify-end head-3">
+                                <div class="text-center md:text-right relative inline-block">
+                                    <h3 class="text-xl xl:text-2xl font-bold text-brand-purple mb-2 relative z-10">
+                                        Expand Your <br> <span
+                                            class="text-brand-orange font-light text-lg lg:text-2xl xl:text-3xl">Horizons</span>
+                                    </h3>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Custom Pagination UI element for Swiper -->
+                <div
+                    class="hero-pagination pt-20 flex justify-center mt-8 gap-2 relative z-20 w-full mb-4 cursor-pointer">
+                </div>
+            </div>
+
+            <!-- Abstract background blobs -->
+            <div
+                class="absolute top-0 right-0 w-1/2 h-full bg-gradient-to-bl from-orange-100 to-transparent opacity-50 z-0 pointer-events-none">
+            </div>
+            <div
+                class="absolute top-20 right-20 w-96 h-96 bg-purple-100 rounded-full mix-blend-multiply blur-3xl opacity-50 z-0 pointer-events-none">
+            </div>
+            <div
+                class="absolute top-40 right-40 w-72 h-72 bg-yellow-100 rounded-full mix-blend-multiply blur-3xl opacity-50 z-0 pointer-events-none">
+            </div>
+        </section>
+
+        <!-- Portfolio Section -->
+        <section class="py-16 lg:py-24 bg-white shrink-0" id="homeportfolio">
+            <div class="container mx-auto px-4 lg:px-8 text-center mb-12 head-portfolio">
+                <img src="assets/images/Portfolio.png" width="300" height="200" alt="Portfolio"
+                    class="md:w-1/4 w-1/6 mx-auto">
+                <p class="text-gray-600 max-w-2xl mx-auto font-medium">
+                    From idea to identity – we design, develop, and deliver complete creative solutions under one roof
+                </p>
+            </div>
+
+            <div class="home-portfolio-grid">
+                <!-- Portfolio Grid - 4 Columns -->
+                <div class="grid grid-cols-2 md:grid-cols-3">
+                    <!-- Column 1 -->
+
+                    <a href="assets/img/box.png" data-fancybox="gallery" data-caption="Granola Package" class="block overflow-hidden">
+                        <img src="assets/img/box.png" alt="Granola Package"
+                            class="w-full portfolio-card object-cover h-64">
+                    </a>
+                    <a href="assets/img/pouch.png" data-fancybox="gallery" data-caption="Oats Package" class="block overflow-hidden">
+                        <img src="assets/img/pouch.png" alt="Oats Package"
+                            class="w-full portfolio-card object-cover h-64">
+                    </a>
+                    <a href="assets/img/box.png" data-fancybox="gallery" data-caption="Granola Package" class="block overflow-hidden">
+                        <img src="assets/img/box.png" alt="Granola Package"
+                            class="w-full portfolio-card object-cover h-64">
+                    </a>
+
+                    <!-- Column 2 -->
+
+                    <a href="assets/img/pouch.png" data-fancybox="gallery" data-caption="Snack Pouch" class="block overflow-hidden">
+                        <img src="assets/img/pouch.png" alt="Snack Pouch"
+                            class="w-full portfolio-card object-cover h-64">
+                    </a>
+                    <a href="assets/img/box.png" data-fancybox="gallery" data-caption="Biscuits" class="block overflow-hidden">
+                        <img src="assets/img/box.png" alt="Biscuits"
+                            class="w-full portfolio-card object-cover h-64">
+                    </a>
+                    <a href="assets/img/pouch.png" data-fancybox="gallery" data-caption="Snack Pouch" class="block overflow-hidden">
+                        <img src="assets/img/pouch.png" alt="Snack Pouch"
+                            class="w-full portfolio-card object-cover h-64">
+                    </a>
+
+                    <!-- Column 3 -->
+
+                    <a href="assets/img/box.png" data-fancybox="gallery" data-caption="Chips Pouch" class="block overflow-hidden">
+                        <img src="assets/img/box.png" alt="Chips Pouch"
+                            class="w-full portfolio-card object-cover h-64">
+                    </a>
+                    <a href="assets/img/pouch.png" data-fancybox="gallery" data-caption="Granola" class="block overflow-hidden">
+                        <img src="assets/img/pouch.png" alt="Granola"
+                            class="w-full portfolio-card object-cover h-64">
+                    </a>
+                    <a href="assets/img/box.png" data-fancybox="gallery" data-caption="Chips Pouch" class="block overflow-hidden">
+                        <img src="assets/img/box.png" alt="Chips Pouch"
+                            class="w-full portfolio-card object-cover h-64">
+                    </a>
+
+                    <!-- Column 4 -->
+
+                    <a href="assets/img/pouch.png" data-fancybox="gallery" data-caption="Premium Biscuits" class="block overflow-hidden">
+                        <img src="assets/img/pouch.png" alt="Premium Biscuits"
+                            class="w-full portfolio-card object-cover h-64">
+                    </a>
+                    <a href="assets/img/box.png" data-fancybox="gallery" data-caption="Cereal Bar" class="block overflow-hidden">
+                        <img src="assets/img/box.png" alt="Cereal Bar"
+                            class="w-full portfolio-card object-cover h-64">
+                    </a>
+                    <a href="assets/img/pouch.png" data-fancybox="gallery" data-caption="Premium Biscuits" class="block overflow-hidden">
+                        <img src="assets/img/pouch.png" alt="Premium Biscuits"
+                            class="w-full portfolio-card object-cover h-64">
+                    </a>
+
+                </div>
+
+                <div class="text-center mt-12 pb-4">
+                    <a href="portfolio.html"
+                        class="bg-gradient-to-r from-brand-yellow to-brand-orange hover:from-brand-orange hover:to-brand-yellow text-white font-bold py-2 px-8 rounded-full shadow-lg transition-all transform hover:scale-105">
+                        View More
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Us Section -->
+        <section class="bg-[#F0E6FF] py-12 lg:py-16" id="homeaboutus">
+            <div class="container mx-auto px-4 lg:px-8">
+                <div class="flex flex-col md:flex-row items-center gap-8 md:gap-16">
+                    <div class="w-full md:w-1/3 text-center md:text-left about-head">
+                        <h2
+                            class="text-4xl md:text-6xl font-extrabold text-brand-purple italic mb-1 shadow-sm opacity-90 drop-shadow-sm text-vartigo">
+                            About Us</h2>
+                        <h3 class="text-xl md:text-2xl text-gray-500 italic font-medium">Our Creative Legacy</h3>
+                    </div>
+                    <div class="w-full md:w-2/3">
+                        <p
+                            class="about-desc text-gray-700 font-medium leading-relaxed text-center md:text-left text-sm md:text-base">
+                            Since 1997, we've been turning ideas into impactful brand identities. From creative design
+                            to advanced printing and marketing solutions, we blend experience, innovation and precision
+                            to help businesses stand out. Today, as a growing Private Limited company, we continue to
+                            empower our clients a step ahead.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Packages Section -->
+        <section class="py-16 lg:py-24 bg-white relative text-agency" id="homepackaging">
+            <div class="container mx-auto px-4 lg:px-8">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-extrabold text-brand-purple mb-4 pack-head">Our Most Popular Packages
+                    </h2>
+                    <p class="text-gray-600 font-bold max-w-xl mx-auto pack-desc">Choose a plan from us and make a great work
+                        together!</p>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <!-- Package 1 -->
+                    <div
+                        class="bg-gradient-to-br from-[#F0E6FF] to-[#F0E6FF] to-[#FFFFFF] p-5 rounded-2xl shadow-sm border border-[#D9C4F0] transition-transform hover:-translate-y-2 hover:shadow-lg pack-cards">
+                        <h3 class="font-bold text-center text-lg mb-2 bg-white p-2 rounded-full">Tube / Box Packaging
+                        </h3>
+                        <p class="text-xs text-center text-gray-600 mb-6 px-2 h-8 font-medium">Elegant cosmetics or FMCG
+                            products, tubes showcase our styling prowess</p>
+                        <ul class="text-[0.8rem] font-light text-gray-400">
+                            <li class="custom-bullet  p-2 rounded w-full">2 Design Concepts by Senior
+                                Designers</li>
+                            <li class="custom-bullet  p-2 rounded w-full">Till you Satisfy (Minor changes)
+                                Design Concept</li>
+                            <li class="custom-bullet  p-2 rounded w-full">Content - Given By You / Concept By
+                                You</li>
+                            <li class="custom-bullet  p-2 rounded w-full">Source File - No (Print Ready PDF
+                                Provide)</li>
+                            <li class="custom-bullet  p-2 rounded w-full">Demo - Color Copies</li>
+                            <li class="custom-bullet  p-2 rounded w-full">Color Output Match Details</li>
+                            <li class="custom-bullet  p-2 rounded w-full">3D Digital View of Box</li>
+                        </ul>
+                    </div>
+                    <!-- Package 2 -->
+                    <div
+                        class="bg-gradient-to-br from-[#FFF0E6] to-[#FFF0E6] to-[#FFFFFF] p-5 rounded-2xl shadow-sm border border-[#F0D9C4] transition-transform hover:-translate-y-2 hover:shadow-lg pack-cards">
+                        <h3 class="font-bold text-center text-lg mb-2 bg-white p-2 rounded-full">Food Products Packaging
+                        </h3>
+                        <p class="text-xs text-center text-gray-600 mb-6 px-2 h-8 font-medium">Stand out in a crowded
+                            market with food item packaging as good as your product</p>
+                        <ul class="text-[0.8rem] space-y-3 text-gray-400">
+                            <li class="custom-bullet  p-2 rounded">4 Design Concept Details Setup by Our
+                                Designers</li>
+                            <li class="custom-bullet  p-2 rounded">Till you Satisfy (Minor changes) Design
+                                Concept</li>
+                            <li class="custom-bullet  p-2 rounded">Content - Given By You / Concept By You
+                            </li>
+                            <li class="custom-bullet  p-2 rounded border-l-2 border-brand-orange">Source File
+                                - Yes</li>
+                            <li class="custom-bullet  p-2 rounded">Demo - Color Copies</li>
+                            <li class="custom-bullet  p-2 rounded">Color Match Depends on Prints</li>
+                            <li class="custom-bullet  p-2 rounded">Original Photo Shoot Details Setup</li>
+                        </ul>
+                    </div>
+                    <!-- Package 3 -->
+                    <div
+                        class="bg-gradient-to-br from-[#E6F0FF] to-[#E6F0FF] to-[#FFFFFF] p-5 rounded-2xl shadow-sm border border-[#C4D9F0] transition-transform hover:-translate-y-2 hover:shadow-lg pack-cards">
+                        <h3 class="font-bold text-center text-lg mb-2 bg-white p-2 rounded-full">Product Box Packaging
+                        </h3>
+                        <p class="text-xs text-center text-gray-600 mb-6 px-2 h-8 font-medium">Enhance products with
+                            sleek and functional box packaging designs and ideas</p>
+                        <ul class="text-[0.8rem] space-y-3 font-medium text-gray-400">
+                            <li class="custom-bullet  p-2 rounded">2 Design Concept Details Setup by Our
+                                Designers</li>
+                            <li class="custom-bullet  p-2 rounded">Till you Satisfy (Minor changes) Design
+                                Concept</li>
+                            <li class="custom-bullet  p-2 rounded">Content - Given By You / Concept By You
+                            </li>
+                            <li class="custom-bullet  p-2 rounded">Source File - No (Print Ready PDF Provide)
+                            </li>
+                            <li class="custom-bullet  p-2 rounded">Demo - Color Copies</li>
+                            <li class="custom-bullet  p-2 rounded">Color Match Depends on Prints</li>
+                            <li class="custom-bullet  p-2 rounded">Delivery of all materials within 10 days
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- Package 4 -->
+                    <div
+                        class="bg-gradient-to-br from-[#FFF8E6] to-[#FFF8E6] to-[#FFFFFF] p-5 rounded-2xl shadow-sm border border-[#F0E6C4] transition-transform hover:-translate-y-2 hover:shadow-lg pack-cards">
+                        <h3 class="font-bold text-center text-lg mb-2 bg-white p-2 rounded-full">Product Label or
+                            Sticker</h3>
+                        <p class="text-xs text-center text-gray-600 mb-6 px-2 h-8 font-medium">Our labels complement
+                            your products that looks great and feels premium</p>
+                        <ul class="text-[0.8rem] space-y-3 font-medium text-gray-400">
+                            <li class="custom-bullet  p-2 rounded">2 Design Concept Details Setup by Our
+                                Designers</li>
+                            <li class="custom-bullet  p-2 rounded">Till you Satisfy (Minor changes) Design
+                                Concept</li>
+                            <li class="custom-bullet  p-2 rounded">Content - Given By You / Concept By You
+                            </li>
+                            <li class="custom-bullet  p-2 rounded">Source File - No (Print Ready PDF Provide)
+                            </li>
+                            <li class="custom-bullet  p-2 rounded">Demo - Color Copies</li>
+                            <li class="custom-bullet  p-2 rounded">Color Match Depends on Prints</li>
+                            <li class="custom-bullet  p-2 rounded border-l-2 border-brand-purple">Design
+                                provided fast and reliable</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!-- Decorative wave below packages based on design -->
+            <div class="w-full absolute bottom-0 left-0 bg-gradient-to-t from-gray-50 to-transparent h-12"></div>
+        </section>
+
+        <!-- Stats Section -->
+        <section class="py-16 bg-white relative text-agency" id="homestats">
+            <div class="container mx-auto px-4 lg:px-8 text-center relative z-10">
+                <h2 class="text-xl md:text-2xl font-bold text-brand-purple mb-12 uppercase tracking-widest drop-shadow-sm">
+                    STRONG FAMILY
+                </h2>
+
+                <div class="flex flex-wrap justify-center gap-12 md:gap-24">
+                    <div class="flex flex-col items-center stat-item" data-target="25">
+                        <div class="relative w-32 h-32 mb-6 flex items-center justify-center border border-dashed rounded-full">
+                            <svg class="absolute top-0 left-0 w-full h-full transform -rotate-90" viewBox="0 0 100 100">
+                                <circle class="progress-ring" cx="50" cy="50" r="45" fill="transparent" stroke="#F98616" stroke-width="8" stroke-dasharray="282.74" stroke-dashoffset="282.74" stroke-linecap="round" />
+                            </svg>
+                            <div class="text-3xl font-extrabold text-gray-700 relative z-10 flex items-center">
+                                <span class="counter">0</span>K
+                            </div>
+                        </div>
+                        <p class="text-sm font-bold text-gray-400 tracking-wider">PROJECTS COMPLETED</p>
+                    </div>
+
+                    <div class="flex flex-col items-center stat-item" data-target="40">
+                        <div class="relative w-32 h-32 mb-6 flex items-center justify-center border border-dashed rounded-full">
+                            <svg class="absolute top-0 left-0 w-full h-full transform -rotate-90" viewBox="0 0 100 100">
+                                <circle class="progress-ring" cx="50" cy="50" r="45" fill="transparent" stroke="#F98616" stroke-width="8" stroke-dasharray="282.74" stroke-dashoffset="282.74" stroke-linecap="round" />
+                            </svg>
+                            <div class="text-3xl font-extrabold text-gray-700 relative z-10 flex items-center">
+                                <span class="counter">0</span>K
+                            </div>
+                        </div>
+                        <p class="text-sm font-bold text-gray-400 tracking-wider">ACTIVE CLIENTS</p>
+                    </div>
+
+                    <div class="flex flex-col items-center stat-item" data-target="60">
+                        <div class="relative w-32 h-32 mb-6 flex items-center justify-center border border-dashed rounded-full">
+                            <svg class="absolute top-0 left-0 w-full h-full transform -rotate-90" viewBox="0 0 100 100">
+                                <circle class="progress-ring" cx="50" cy="50" r="45" fill="transparent" stroke="#F98616" stroke-width="8" stroke-dasharray="282.74" stroke-dashoffset="282.74" stroke-linecap="round" />
+                            </svg>
+                            <div class="text-3xl font-extrabold text-gray-700 relative z-10 flex items-center">
+                                <span class="counter">0</span>K
+                            </div>
+                        </div>
+                        <p class="text-sm font-bold text-gray-400 tracking-wider">AWARDS WIN</p>
+                    </div>
+
+                    <div class="flex flex-col items-center stat-item" data-target="80">
+                        <div class="relative w-32 h-32 mb-6 flex items-center justify-center border border-dashed rounded-full">
+                            <svg class="absolute top-0 left-0 w-full h-full transform -rotate-90" viewBox="0 0 100 100">
+                                <circle class="progress-ring" cx="50" cy="50" r="45" fill="transparent" stroke="#F98616" stroke-width="8" stroke-dasharray="282.74" stroke-dashoffset="282.74" stroke-linecap="round" />
+                            </svg>
+                            <div class="text-3xl font-extrabold text-gray-700 relative z-10 flex items-center">
+                                <span class="counter">0</span>K
+                            </div>
+                        </div>
+                        <p class="text-sm font-bold text-gray-400 tracking-wider">HAPPY CLIENTS</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Clients Section -->
+        <section class="py-12 bg-[#fafafa] overflow-hidden">
+            <div class="container mx-auto px-4 lg:px-8">
+                <div class="flex flex-col md:flex-row items-center border-b border-gray-200 pb-8 gap-8">
+                    <div class="w-full md:w-[20%] text-center md:text-left shrink-0">
+                        <h2 class="text-6xl text-vartigo font-extrabold text-[#F98616] italic mb-1">Clients</h2>
+                        <h3 class="text-sm font-medium text-gray-400 italic">Our Creative Legacy</h3>
+                    </div>
+                    <div class="w-full md:w-[80%] overflow-hidden py-4 select-none flex group relative">
+                        <!-- Left mask for marquee -->
+                        <div
+                            class="absolute top-0 left-0 w-8 h-full bg-gradient-to-r from-[#fafafa] to-transparent z-10 pointer-events-none">
+                        </div>
+
+                        <!-- Infinite Scroller Container -->
+                        <div class="flex animate-scroller gap-8 pr-8">
+                            <div
+                                class="bg-[#1b4332] rounded-full px-6 py-2 text-white font-bold italic shadow drop-shadow-md border border-green-800 flex items-center justify-center min-w-[120px] h-12">
+                                Tea Garden</div>
+                            <div
+                                class="bg-[#0b525b] rounded-full px-6 py-2 text-yellow-300 font-black italic shadow drop-shadow-md border border-[#1b3a4b] flex items-center justify-center min-w-[120px] h-12">
+                                Dulu</div>
+                            <div
+                                class="bg-white rounded-full px-6 py-2 border-2 border-[#1d3557] text-[#1d3557] font-bold shadow flex items-center justify-center min-w-[120px] h-12">
+                                DUTTA'S</div>
+                            <div
+                                class="bg-[#d62828] rounded-full px-6 py-2 text-white font-extrabold italic shadow drop-shadow-md flex items-center justify-center min-w-[120px] h-12">
+                                Trishna</div>
+                            <div
+                                class="bg-[#2d6a4f] rounded-full px-6 py-2 text-white font-serif shadow flex items-center justify-center min-w-[120px] h-12">
+                                Kitchen King</div>
+                            <div
+                                class="bg-white rounded px-6 py-2 border border-[#74c69d] text-[#2d6a4f] font-bold shadow flex items-center justify-center min-w-[120px] h-12">
+                                OPEC</div>
+                        </div>
+                        <div class="flex animate-scroller gap-8 pr-8" aria-hidden="true">
+                            <div
+                                class="bg-[#1b4332] rounded-full px-6 py-2 text-white font-bold italic shadow drop-shadow-md border border-green-800 flex items-center justify-center min-w-[120px] h-12">
+                                Tea Garden</div>
+                            <div
+                                class="bg-[#0b525b] rounded-full px-6 py-2 text-yellow-300 font-black italic shadow drop-shadow-md border border-[#1b3a4b] flex items-center justify-center min-w-[120px] h-12">
+                                Dulu</div>
+                            <div
+                                class="bg-white rounded-full px-6 py-2 border-2 border-[#1d3557] text-[#1d3557] font-bold shadow flex items-center justify-center min-w-[120px] h-12">
+                                DUTTA'S</div>
+                            <div
+                                class="bg-[#d62828] rounded-full px-6 py-2 text-white font-extrabold italic shadow drop-shadow-md flex items-center justify-center min-w-[120px] h-12">
+                                Trishna</div>
+                            <div
+                                class="bg-[#2d6a4f] rounded-full px-6 py-2 text-white font-serif shadow flex items-center justify-center min-w-[120px] h-12">
+                                Kitchen King</div>
+                            <div
+                                class="bg-white rounded px-6 py-2 border border-[#74c69d] text-[#2d6a4f] font-bold shadow flex items-center justify-center min-w-[120px] h-12">
+                                OPEC</div>
+                        </div>
+
+                        <!-- Right mask for marquee -->
+                        <div
+                            class="absolute top-0 right-0 w-8 h-full bg-gradient-to-l from-[#fafafa] to-transparent z-10 pointer-events-none">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer Section -->
+        <footer
+            class="bg-gradient-to-r from-brand-orange via-brand-yellow to-brand-yellow pt-16 pb-8 text-brand-dark text-agency">
+            <div class="container mx-auto px-4 lg:px-8">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
+                    <!-- Column 1 -->
+                    <div>
+                        <div class="flex items-center gap-3 mb-6 text-brand-dark">
+                            <img src="./assets/images/logo/Fairbrain Logo PNG.png" alt=""
+                                class="w-auto bg-[#ffffff] rounded-2xl p-2">
+                        </div>
+                        <div class="flex items-start gap-3 mb-4">
+                            <svg class="w-5 h-5 mt-1 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z">
+                                </path>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                            </svg>
+                            <p class="text-sm">92A, Jatindra Mohan Avenue, Kolkata <br> 700006, West
+                                Bengal</p>
+                        </div>
+                        <div class="flex items-center gap-3 mb-4">
+                            <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z">
+                                </path>
+                            </svg>
+                            <p class="text-sm">+91-9830438186 / +91-9051838184</p>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z">
+                                </path>
+                            </svg>
+                            <p class="text-sm">contact@fairbrain.in</p>
+                        </div>
+                    </div>
+
+                    <!-- Column 2 -->
+                    <div>
+                        <h3 class="font-extrabold text-lg mb-6 uppercase tracking-wider">QUICK LINKS</h3>
+                        <ul class="space-y-3 text-sm">
+                            <li><a href="index.html"
+                                    class="hover:text-white transition-colors flex items-center gap-2"><span
+                                        class="w-1.5 h-1.5 bg-brand-dark rounded-full inline-block"></span> Home</a>
+                            </li>
+                            <li><a href="about.html"
+                                    class="hover:text-white transition-colors flex items-center gap-2"><span
+                                        class="w-1.5 h-1.5 bg-brand-dark rounded-full inline-block"></span> About Us</a>
+                            </li>
+                            <li><a href="gallery.html"
+                                    class="hover:text-white transition-colors flex items-center gap-2"><span
+                                        class="w-1.5 h-1.5 bg-brand-dark rounded-full inline-block"></span> Web
+                                    Design</a>
+                            </li>
+                            <li><a href="service.html"
+                                    class="hover:text-white transition-colors flex items-center gap-2"><span
+                                        class="w-1.5 h-1.5 bg-brand-dark rounded-full inline-block"></span> Services</a>
+                            </li>
+                            <li><a href="portfolio.html"
+                                    class="hover:text-white transition-colors flex items-center gap-2"><span
+                                        class="w-1.5 h-1.5 bg-brand-dark rounded-full inline-block"></span>
+                                    Portfolio</a></li>
+                            <li><a href="contact.html"
+                                    class="hover:text-white transition-colors flex items-center gap-2"><span
+                                        class="w-1.5 h-1.5 bg-brand-dark rounded-full inline-block"></span> Contact
+                                    Us</a></li>
+                            <li><a href="#" class="hover:text-white transition-colors flex items-center gap-2"><span
+                                        class="w-1.5 h-1.5 bg-brand-dark rounded-full inline-block"></span> Privacy
+                                    Policy</a></li>
+                        </ul>
+                    </div>
+
+                    <!-- Column 3 -->
+                    <div>
+                        <h3 class="font-extrabold text-lg mb-6 uppercase tracking-wider">COMMUNITY</h3>
+                        <ul class="space-y-3 text-sm">
+                            <li><a href="#" class="hover:text-white transition-colors flex items-center gap-2"><span
+                                        class="w-1.5 h-1.5 bg-brand-dark rounded-full inline-block"></span> Our
+                                    Process</a></li>
+                            <li><a href="#" class="hover:text-white transition-colors flex items-center gap-2"><span
+                                        class="w-1.5 h-1.5 bg-brand-dark rounded-full inline-block"></span> Our
+                                    network</a></li>
+                            <li><a href="#" class="hover:text-white transition-colors flex items-center gap-2"><span
+                                        class="w-1.5 h-1.5 bg-brand-dark rounded-full inline-block"></span> Products</a>
+                            </li>
+                            <li><a href="#" class="hover:text-white transition-colors flex items-center gap-2"><span
+                                        class="w-1.5 h-1.5 bg-brand-dark rounded-full inline-block"></span> Quality and
+                                    Testing</a></li>
+                        </ul>
+                    </div>
+
+                    <!-- Column 4 -->
+                    <div>
+                        <h3 class="font-extrabold text-lg mb-6 uppercase tracking-wider">GET IN TOUCH</h3>
+                        <ul class="space-y-3 text-sm mb-6">
+                            <li><a href="#" class="hover:text-white transition-colors flex items-center gap-2"><span
+                                        class="w-1.5 h-1.5 bg-brand-dark rounded-full inline-block"></span> Facebook</a>
+                            </li>
+                            <li><a href="#" class="hover:text-white transition-colors flex items-center gap-2"><span
+                                        class="w-1.5 h-1.5 bg-brand-dark rounded-full inline-block"></span>
+                                    Instagram</a></li>
+                            <li><a href="#" class="hover:text-white transition-colors flex items-center gap-2"><span
+                                        class="w-1.5 h-1.5 bg-brand-dark rounded-full inline-block"></span> Twitter</a>
+                            </li>
+                        </ul>
+                        <!-- Social Icons -->
+                        <div class="flex gap-4">
+                            <a href="#"
+                                class="w-10 h-10 flex items-center justify-center rounded-full bg-brand-purple text-white hover:bg-white hover:text-brand-dark transition-colors shadow">
+                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                    <path
+                                        d="M22.675 0H1.325C.593 0 0 .593 0 1.325v21.351C0 23.407.593 24 1.325 24H12.82v-9.294H9.692v-3.622h3.128V8.413c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.795.143v3.24l-1.918.001c-1.504 0-1.795.715-1.795 1.763v2.313h3.587l-.467 3.622h-3.12V24h6.116c.73 0 1.323-.593 1.323-1.325V1.325C24 .593 23.407 0 22.675 0z" />
+                                </svg>
+                            </a>
+                            <a href="#"
+                                class="w-10 h-10 flex items-center justify-center rounded-full bg-brand-purple text-white hover:bg-white hover:text-brand-dark transition-colors shadow">
+                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                    <path
+                                        d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z" />
+                                </svg>
+                            </a>
+                            <a href="#"
+                                class="w-10 h-10 flex items-center justify-center rounded-full bg-brand-purple text-white hover:bg-white hover:text-brand-dark transition-colors shadow">
+                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                    <path
+                                        d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z" />
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text-center pt-8 border-t border-brand-dark/20 text-brand-purple">
+                    <p class="text-sm">&copy; Copyright <strong>FAIRBRAIN</strong> All Rights Reserved.
+                    </p>
+                </div>
+            </div>
+        </footer>
+    </main>
+
+    <!-- Swiper JS -->
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <!-- Fancybox JS -->
+    <script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui@5.0/dist/fancybox/fancybox.umd.js"></script>
+    <script src="assets/js/main.js"></script>
+</body>
+
+</html>

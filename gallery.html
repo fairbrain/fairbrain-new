@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gallery - FairBrain</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" href="assets/css/style.css">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Poppins', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            purple: '#6B409E',
+                            purpleLight: '#8A5FB8',
+                            orange: '#F98616',
+                            yellow: '#FFCA2C',
+                            dark: '#333333',
+                            gray: '#F3F4F6'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        .gallery-container {
+            display: flex;
+            align-items: center;
+            min-height: calc(100vh - 80px);
+            /* Adjust based on header */
+            overflow: hidden;
+            background: #ffffff;
+        }
+
+        /* Left Side Brand Name */
+        .brand-vertical {
+            writing-mode: vertical-lr;
+            /* Vertical text top to bottom */
+            transform: rotate(180deg);
+            /* Read bottom to top */
+            font-size: clamp(1rem , 5vw , 2.5rem);
+            font-weight: 800;
+            color: #6B409E;
+            opacity: 0.8;
+            letter-spacing: 0.05em;
+            text-align: center;
+            
+        }
+
+        /* Monitor Container */
+        .monitor-wrapper {
+            position: relative;
+            width: 100%;
+            max-width: 1400px;
+            margin: auto;
+        }
+
+        .screen-content {
+            position: absolute;
+            top: 2.6%;
+            /* Adjust to fit inside monitor bezels */
+            left: 1.9%;
+            right: 2%;
+            bottom: 24%;
+            /* Adjust for the monitor stand/bottom bezel */
+            background: #fff;
+            overflow: hidden;
+            /* UPDATED: Changed from auto to hidden for scaling */
+            border-radius: 2px;
+        }
+
+        @media (max-width: 600px) {
+            .monitor-wrapper {
+                max-width: 320px;
+                margin: 0 auto;
+            }
+
+            .screen-content {
+                top: 3%;
+                left: 4%;
+                right: 6%;
+                bottom: 2%;
+                border-radius: 34px;
+            }
+        }
+
+        /* NEW: Force Iframe to 1440px */
+        #website-preview {
+            width: 100%;
+            transform-origin: top left;
+            border: none;
+        }
+
+        .screen-content::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .screen-content::-webkit-scrollbar-track {
+            background: #f1f1f1;
+        }
+
+        .screen-content::-webkit-scrollbar-thumb {
+            background: #888;
+            border-radius: 4px;
+        }
+
+        /* Right Sidebar Tabs */
+        .sidebar {
+            width: 120px;
+            background-color: #F8ECCD;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 4rem 0;
+            gap: 1.5rem;
+            box-shadow: -5px 0 15px rgba(0, 0, 0, 0.05);
+            margin-right: -10px;
+            /* Optional hide border */
+        }
+
+        .logo-tab {
+            position: relative;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        /* The white circle containing the logo */
+        .logo-circle {
+            width: 70px;
+            height: 70px;
+            background: #ffffff;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            font-weight: bold;
+            font-size: 0.8rem;
+            text-align: center;
+            position: relative;
+            z-index: 10;
+            transition: all 0.3s ease;
+            color: #333;
+            border: 2px solid transparent;
+            word-break: break-word;
+            line-height: 1.1;
+        }
+
+        /* Active State */
+        .logo-tab.active {
+            /* Keep stationary */
+        }
+
+        .logo-tab.active .logo-circle {
+            border-color: #F8ECCD;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            width: 80px;
+            height: 80px;
+            font-size: 1rem;
+            transform: translateX(-40px);
+        }
+
+        .logo-tab .logo-bg-curve {
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translate(0, -50%);
+            width: 30px;
+            height: 100px;
+            background: #F8ECCD;
+            border-radius: 30px 0 0 30px;
+            z-index: 1;
+            opacity: 0;
+            transition: all 0.3s ease;
+            pointer-events: none;
+            display: block !important;
+        }
+
+        .logo-tab.active .logo-bg-curve {
+            opacity: 1;
+            transform: translate(-100%, -50%);
+        }
+
+        .logo-tab .logo-bg-curve::before,
+        .logo-tab .logo-bg-curve::after {
+            content: '';
+            position: absolute;
+            right: 0;
+            width: 20px;
+            height: 20px;
+            background: transparent;
+        }
+
+        .logo-tab .logo-bg-curve::before {
+            top: -20px;
+            rotate: -15deg;
+            left: 12px;
+            border-bottom-right-radius: 20px;
+            box-shadow: 10px 10px 0 10px #F8ECCD;
+        }
+
+        .logo-tab .logo-bg-curve::after {
+            bottom: -20px;
+            rotate: 15deg;
+            left:12px;
+            border-top-right-radius: 20px;
+            box-shadow: 10px -10px 0 10px #F8ECCD;
+        }
+    </style>
+    <!-- GSAP for animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/SplitText.min.js"></script>
+</head>
+
+<body class="font-sans text-brand-dark antialiased bg-white overflow-x-hidden">
+    <header class="w-full bg-white shadow-sm sticky top-0 z-50 text-agency">
+        <div class="container mx-auto px-4 lg:px-8 py-3 flex items-center justify-between">
+            <div class="flex items-center gap-2">
+                <img src="assets/images/logo/Fairbrain Logo PNG.png" width="300" height="150" alt="FairBrain Logo"
+                    class="w-40">
+            </div>
+
+            <nav class="hidden md:flex space-x-6 lg:space-x-8 font-medium text-sm lg:text-base">
+                <a href="index.html" class="text-brand-dark hover:text-brand-orange transition-colors">Home</a>
+                <a href="about.html" class="text-brand-dark  border-brand-orange transition-colors">About Us</a>
+                <a href="gallery.html" class="text-brand-orange border-b-2 border-brand-orange transition-colors">Web Design</a>
+                <a href="service.html" class="text-brand-dark hover:text-brand-orange transition-colors">Services</a>
+                <a href="portfolio.html" class="text-brand-dark hover:text-brand-orange transition-colors">Portfolio</a>
+                <a href="contact.html" class="text-brand-dark hover:text-brand-orange transition-colors">Contact Us</a>
+            </nav>
+
+            <div class="flex items-center gap-4">
+                <button onclick="window.location.href='login.html'"
+                    class="bg-brand-dark hover:bg-black text-white px-5 py-2.5 rounded-md font-semibold text-sm transition-colors flex items-center gap-2 shadow-sm">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
+                        stroke="currentColor" class="w-5 h-5">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
+                    </svg>
+                    <span>Login</span>
+                </button>
+                <button class="md:hidden text-brand-dark p-2" id="mobile-menu-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                        stroke="currentColor" class="w-6 h-6">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <div id="mobile-menu"
+        class="fixed inset-y-0 right-0 z-[100] w-64 bg-white shadow-2xl transform translate-x-full transition-transform duration-300 md:hidden flex flex-col items-center pt-8 border-l border-brand-orange/20">
+        <button id="close-mobile-menu" class="absolute top-6 right-6 text-brand-dark hover:text-brand-orange">
+            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+            </svg>
+        </button>
+        <div class="flex flex-col gap-6 w-full text-center px-4 mt-8">
+            <a href="index.html"
+                class="text-brand-dark hover:text-brand-orange text-lg font-bold border-b pb-2">Home</a>
+            <a href="about.html" class="text-brand-dark hover:text-brand-orange text-lg font-bold border-b pb-2">About
+                Us</a>
+            <a href="gallery.html"
+                class="text-brand-orange hover:text-brand-orange text-lg font-bold border-b pb-2">Web Design</a>
+            <a href="service.html"
+                class="text-brand-dark hover:text-brand-orange text-lg font-bold border-b pb-2">Services</a>
+            <a href="portfolio.html"
+                class="text-brand-dark hover:text-brand-orange text-lg font-bold border-b pb-2">Portfolio</a>
+            <a href="contact.html" class="text-brand-dark hover:text-brand-orange text-lg font-bold">Contact Us</a>
+            <button onclick="window.location.href='login.html'"
+                class="bg-gradient-to-r from-brand-orange to-brand-yellow text-white px-6 py-3 rounded-md font-semibold mt-4 shadow-md w-full">Login
+                Account</button>
+        </div>
+    </div>
+
+    <main>
+        <section class="gallery-container relative py-10 lg:py-0">
+            
+
+            <div class="hidden lg:flex w-2/12 items-center justify-center z-10 bg-gradient-to-b from-purple-100 to-pink-300 relative  left-[180px] h-auto rounded-[40px] py-10 -mt-40">
+                <div class="brand-vertical text-brand-purple -translate-x-[140%] rotate-180" id="vertical-brand-name">DULU</div>
+            </div>
+
+            <div class="w-full lg:w-8/12 flex items-center justify-center p-4 relative z-10 w-full md:mb-0 mb-[100px]">
+                <div class="monitor-wrapper">
+                    <picture>
+                        <source media="(max-width: 600px)" srcset="assets/images/gallery/mockup-mobile.png">
+                        <img src="assets/images/gallery/monitor.png" alt="Monitor"
+                            class="w-full h-auto drop-shadow-2xl">
+                    </picture>
+
+                    <div class="screen-content">
+                        <iframe id="website-preview" src="https://www.dulu.co.in/"
+                            title="Website Preview"></iframe>
+                    </div>
+                </div>
+            </div>
+
+            <div class="hidden lg:flex w-2/12 justify-end relative z-10 items-center">
+                <div class="sidebar">
+                    <div class="logo-tab active" onclick="changeBrand('DULU', 'https://www.dulu.co.in/', this)">
+                        <div class="logo-bg-curve hidden"></div>
+                        <div class="logo-circle text-green-700">DULU</div>
+                    </div>
+                    <div class="logo-tab"
+                        onclick="changeBrand('SISCON TMT', 'https://siscontmt.com/', this)">
+                        <div class="logo-bg-curve hidden"></div>
+                        <div class="logo-circle text-blue-900">SISCON TMT</div>
+                    </div>
+                    <div class="logo-tab"
+                        onclick="changeBrand('KPS', 'https://www.kpskitchenking.in/', this)">
+                        <div class="logo-bg-curve hidden"></div>
+                        <div class="logo-circle text-green-800 text-xs">KPS</div>
+                    </div>
+                    <div class="logo-tab"
+                        onclick="changeBrand('Pipli', 'https://www.piplifoods.com/', this)">
+                        <div class="logo-bg-curve block"></div>
+                        <div class="logo-circle text-yellow-400 bg-[#0b525b]">Pipli</div>
+                    </div>
+                    <div class="logo-tab"
+                        onclick="changeBrand('Eyspace', 'https://eyespace.in/', this)">
+                        <div class="logo-bg-curve hidden"></div>
+                        <div class="logo-circle text-red-600 bg-red-100 text-xs">Eyspace</div>
+                    </div>
+                    <div class="logo-tab"
+                        onclick="changeBrand('Indian Art College', 'https://indianartcollege.com/', this)">
+                        <div class="logo-bg-curve hidden"></div>
+                        <div class="logo-circle text-green-700 text-xs">Indian Art College</div>
+                    </div>
+                </div>
+            </div>
+
+            <div
+                class="lg:hidden w-full flex flex-row overflow-x-auto p-4 gap-4 pb-0 z-10 absolute bottom-0 bg-white shadow-t border-t border-gray-100">
+                <div class="flex-shrink-0 logo-circle text-green-700 w-16 h-16 text-xs cursor-pointer border border-gray-200"
+                    onclick="changeBrand('DULU', 'https://www.dulu.co.in/', null)">
+                    DULU
+                </div>
+                <div class="flex-shrink-0 logo-circle text-blue-900 w-16 h-16 text-xs cursor-pointer border border-gray-200"
+                    onclick="changeBrand('SISCON TMT', 'https://siscontmt.com/', null)">
+                    SISCON TMT
+                </div>
+                <div class="flex-shrink-0 logo-circle text-green-800 w-16 h-16 text-[10px] cursor-pointer border border-gray-200"
+                    onclick="changeBrand('KPS', 'https://www.kpskitchenking.in/', null)">
+                    KPS
+                </div>
+                <div class="flex-shrink-0 logo-circle text-yellow-500 bg-[#0b525b] w-16 h-16 text-xs cursor-pointer border-2 border-[#F8ECCD]"
+                    onclick="changeBrand('Piplifoods', 'https://www.piplifoods.com/', null)">
+                    Piplifoods
+                </div>
+                <div class="flex-shrink-0 logo-circle text-red-600 bg-red-100 w-16 h-16 text-xs cursor-pointer border border-gray-200"
+                    onclick="changeBrand('Eyespace', 'https://eyespace.in/', null)">
+                    Eyespace
+                </div>
+                <div class="flex-shrink-0 logo-circle text-green-700 w-16 h-16 text-[10px] cursor-pointer border border-gray-200"
+                    onclick="changeBrand('Indian Art College', 'https://indianartcollege.com/', null)">
+                    Indian Art College
+                </div>
+            </div>
+        </section>
+
+        <footer
+            class="bg-gradient-to-r from-brand-orange via-brand-yellow to-brand-yellow pt-16 pb-8 text-brand-dark text-agency">
+            <div class="container mx-auto px-4 lg:px-8">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
+                    <div>
+                        <div class="flex items-center gap-3 mb-6 text-brand-dark">
+                            <img src="./assets/images/logo/Fairbrain Logo PNG.png" alt=""
+                                class="w-auto bg-[#ffffff] rounded-2xl p-2">
+                        </div>
+                        <div class="flex items-start gap-3 mb-4">
+                            <svg class="w-5 h-5 mt-1 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z">
+                                </path>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                            </svg>
+                            <p class="text-sm">92A, Jatindra Mohan Avenue, Kolkata <br> 700006, West
+                                Bengal</p>
+                        </div>
+                        <div class="flex items-center gap-3 mb-4">
+                            <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z">
+                                </path>
+                            </svg>
+                            <p class="text-sm">+91-9830438186 / +91-9051838184</p>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z">
+                                </path>
+                            </svg>
+                            <p class="text-sm">contact@fairbrain.in</p>
+                        </div>
+                    </div>
+
+                    <div>
+                        <h3 class="font-extrabold text-lg mb-6 uppercase tracking-wider">QUICK LINKS</h3>
+                        <ul class="space-y-3 text-sm">
+                            <li><a href="index.html"
+                                    class="hover:text-white transition-colors flex items-center gap-2"><span
+                                        class="w-1.5 h-1.5 bg-brand-dark rounded-full inline-block"></span> Home</a>
+                            </li>
+                            <li><a href="about.html"
+                                    class="hover:text-white transition-colors flex items-center gap-2"><span
+                                        class="w-1.5 h-1.5 bg-brand-dark rounded-full inline-block"></span> About Us</a>
+                            </li>
+                            <li><a href="gallery.html"
+                                    class="hover:text-white transition-colors flex items-center gap-2"><span
+                                        class="w-1.5 h-1.5 bg-brand-dark rounded-full inline-block"></span> Web Design</a>
+                            </li>
+                            <li><a href="service.html"
+                                    class="hover:text-white transition-colors flex items-center gap-2"><span
+                                        class="w-1.5 h-1.5 bg-brand-dark rounded-full inline-block"></span> Services</a>
+                            </li>
+                            <li><a href="portfolio.html"
+                                    class="hover:text-white transition-colors flex items-center gap-2"><span
+                                        class="w-1.5 h-1.5 bg-brand-dark rounded-full inline-block"></span>
+                                    Portfolio</a></li>
+                            <li><a href="contact.html"
+                                    class="hover:text-white transition-colors flex items-center gap-2"><span
+                                        class="w-1.5 h-1.5 bg-brand-dark rounded-full inline-block"></span> Contact
+                                    Us</a></li>
+                            <li><a href="#" class="hover:text-white transition-colors flex items-center gap-2"><span
+                                        class="w-1.5 h-1.5 bg-brand-dark rounded-full inline-block"></span> Privacy
+                                    Policy</a></li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <h3 class="font-extrabold text-lg mb-6 uppercase tracking-wider">COMMUNITY</h3>
+                        <ul class="space-y-3 text-sm">
+                            <li><a href="#" class="hover:text-white transition-colors flex items-center gap-2"><span
+                                        class="w-1.5 h-1.5 bg-brand-dark rounded-full inline-block"></span> Our
+                                    Process</a></li>
+                            <li><a href="#" class="hover:text-white transition-colors flex items-center gap-2"><span
+                                        class="w-1.5 h-1.5 bg-brand-dark rounded-full inline-block"></span> Our
+                                    network</a></li>
+                            <li><a href="#" class="hover:text-white transition-colors flex items-center gap-2"><span
+                                        class="w-1.5 h-1.5 bg-brand-dark rounded-full inline-block"></span> Products</a>
+                            </li>
+                            <li><a href="#" class="hover:text-white transition-colors flex items-center gap-2"><span
+                                        class="w-1.5 h-1.5 bg-brand-dark rounded-full inline-block"></span> Quality and
+                                    Testing</a></li>
+                        </ul>
+                    </div>
+
+                    <div>
+                        <h3 class="font-extrabold text-lg mb-6 uppercase tracking-wider">GET IN TOUCH</h3>
+                        <ul class="space-y-3 text-sm mb-6">
+                            <li><a href="#" class="hover:text-white transition-colors flex items-center gap-2"><span
+                                        class="w-1.5 h-1.5 bg-brand-dark rounded-full inline-block"></span> Facebook</a>
+                            </li>
+                            <li><a href="#" class="hover:text-white transition-colors flex items-center gap-2"><span
+                                        class="w-1.5 h-1.5 bg-brand-dark rounded-full inline-block"></span>
+                                    Instagram</a></li>
+                            <li><a href="#" class="hover:text-white transition-colors flex items-center gap-2"><span
+                                        class="w-1.5 h-1.5 bg-brand-dark rounded-full inline-block"></span> Twitter</a>
+                            </li>
+                        </ul>
+                        <div class="flex gap-4">
+                            <a href="#"
+                                class="w-10 h-10 flex items-center justify-center rounded-full bg-brand-purple text-white hover:bg-white hover:text-brand-dark transition-colors shadow">
+                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                    <path
+                                        d="M22.675 0H1.325C.593 0 0 .593 0 1.325v21.351C0 23.407.593 24 1.325 24H12.82v-9.294H9.692v-3.622h3.128V8.413c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.795.143v3.24l-1.918.001c-1.504 0-1.795.715-1.795 1.763v2.313h3.587l-.467 3.622h-3.12V24h6.116c.73 0 1.323-.593 1.323-1.325V1.325C24 .593 23.407 0 22.675 0z" />
+                                </svg>
+                            </a>
+                            <a href="#"
+                                class="w-10 h-10 flex items-center justify-center rounded-full bg-brand-purple text-white hover:bg-white hover:text-brand-dark transition-colors shadow">
+                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                    <path
+                                        d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z" />
+                                </svg>
+                            </a>
+                            <a href="#"
+                                class="w-10 h-10 flex items-center justify-center rounded-full bg-brand-purple text-white hover:bg-white hover:text-brand-dark transition-colors shadow">
+                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                    <path
+                                        d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z" />
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text-center pt-8 border-t border-brand-dark/20 text-brand-purple">
+                    <p class="text-sm">&copy; Copyright <strong>FAIRBRAIN</strong> All Rights Reserved.
+                    </p>
+                </div>
+            </div>
+        </footer>
+    </main>
+
+    <script>
+        function changeBrand(name, url, element) {
+            // Update vertical text
+            const verticalBrand = document.getElementById('vertical-brand-name');
+            if (verticalBrand) {
+                verticalBrand.innerText = name;
+
+                // Add tiny animation
+                verticalBrand.style.opacity = '0';
+                setTimeout(() => {
+                    verticalBrand.style.opacity = '0.8';
+                }, 100);
+            }
+
+            // Update iframe src
+            document.getElementById('website-preview').src = url;
+
+            // Only update active state if element is provided (ignores mobile clicks for side state)
+            if (element) {
+                document.querySelectorAll('.logo-tab').forEach(tab => {
+                    tab.classList.remove('active');
+                    tab.querySelector('.logo-bg-curve').classList.replace('block', 'hidden');
+                });
+
+                element.classList.add('active');
+                element.querySelector('.logo-bg-curve').classList.replace('hidden', 'block');
+            }
+        }
+
+        // NEW: Function to scale the iframe to 1440px
+        function scaleIframe() {
+            const container = document.querySelector('.screen-content');
+            const iframe = document.getElementById('website-preview');
+
+            if (!container || !iframe) return;
+
+            // Check if viewing on a mobile screen (< 600px)
+            const isMobileView = window.innerWidth <= 600;
+            // Target smaller width to trigger mobile responsive layout in the iframe
+            const targetWidth = isMobileView ? 375 : 1440;
+
+            const containerWidth = container.clientWidth;
+            const containerHeight = container.clientHeight;
+
+            const scaleRatio = containerWidth / targetWidth;
+
+            // Set fixed width and calculate required height before scale
+            iframe.style.width = targetWidth + 'px';
+            iframe.style.height = (containerHeight / scaleRatio) + 'px';
+
+            // Apply scale
+            iframe.style.transform = `scale(${scaleRatio})`;
+        }
+
+        // Call on load and resize
+        window.addEventListener('load', scaleIframe);
+        window.addEventListener('resize', scaleIframe);
+    </script>
+    <script src="assets/js/main.js"></script>
+</body>
+
+</html>

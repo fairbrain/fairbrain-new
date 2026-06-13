@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Home</title>
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Tailwind CSS (CDN) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        dash: {
+                            bg: '#f8f4f9', /* light pinkish */
+                            text: '#4a4d70', /* dark blue/purple */
+                            textLight: '#9495b5',
+                            cardBlue: '#1b326b',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background: radial-gradient(circle at top left, #ffe3ec, transparent 40%),
+                        radial-gradient(circle at top right, #eaddfc, transparent 40%),
+                        radial-gradient(circle at bottom left, #ebf4ff, transparent 40%),
+                        radial-gradient(circle at bottom right, #fdf1e3, transparent 40%);
+            background-color: #f7f3fb; /* Fallback base color */
+            min-height: 100vh;
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background-color: rgba(74, 77, 112, 0.2);
+            border-radius: 10px;
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05), 0 2px 4px -1px rgba(0, 0, 0, 0.03);
+        }
+        .main-content-bg {
+            background: linear-gradient(135deg, rgba(255,255,255,0.7) 0%, rgba(255,255,255,0.3) 100%);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255,255,255,0.8);
+            border-radius: 2rem 0 0 0;
+            box-shadow: -10px -10px 20px rgba(255,255,255,0.5), 10px 10px 20px rgba(0,0,0,0.02);
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="font-sans text-dash-text antialiased overflow-hidden flex h-screen">
+
+    <!-- Sidebar -->
+    <aside class="w-64 flex-shrink-0 flex flex-col p-6 pb-8 z-20 h-full overflow-y-auto">
+        <div class="flex items-center gap-4 mb-10">
+            <div class="w-12 h-12 rounded-2xl bg-white shadow-sm flex items-center justify-center font-bold text-xl text-dash-text">.D</div>
+            <div class="leading-tight">
+                <div class="font-semibold text-dash-text">Client</div>
+                <div class="font-semibold text-dash-text">Name</div>
+            </div>
+        </div>
+        
+        <div class="mb-4 text-sm font-semibold text-dash-text">Menu</div>
+        <nav class="flex flex-col gap-2 mb-8">
+            <a href="index.html" class="flex items-center justify-between px-4 py-3 rounded-xl bg-white/40 font-semibold shadow-sm text-dash-text transition-all">
+                <div class="flex items-center gap-3">
+                    <svg class="w-5 h-5 text-dash-text" fill="currentColor" viewBox="0 0 20 20"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z"></path></svg>
+                    <span>Home</span>
+                </div>
+                <div class="w-1.5 h-1.5 rounded-full bg-dash-cardBlue shadow-[0_0_4px_#1b326b]"></div>
+            </a>
+            <a href="messages.html" class="flex items-center gap-3 px-4 py-3 text-dash-text/70 hover:bg-white/30 rounded-xl transition-all font-medium">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                <span>Messages</span>
+            </a>
+            <a href="layout.html" class="flex items-center gap-3 px-4 py-3 text-dash-text/70 hover:bg-white/30 rounded-xl transition-all font-medium">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6zM4 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2v-2zM14 16a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2v-2z"></path></svg>
+                <span>Layout</span>
+            </a>
+            <a href="document.html" class="flex items-center gap-3 px-4 py-3 text-dash-text/70 hover:bg-white/30 rounded-xl transition-all font-medium">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 7v10a2 2 0 002 2h14a2 2 0 002-2V9a2 2 0 00-2-2h-6l-2-2H5a2 2 0 00-2 2z"></path></svg>
+                <span>Document</span>
+            </a>
+            <a href="#" class="flex items-center gap-3 px-4 py-3 text-dash-text/70 hover:bg-white/30 rounded-xl transition-all font-medium">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z"></path></svg>
+                <span>Application</span>
+            </a>
+        </nav>
+        
+        <div class="mb-4 text-sm font-semibold text-dash-text mt-8">Configuration</div>
+        <nav class="flex flex-col gap-2 flex-grow">
+            <a href="#" class="flex items-center gap-3 px-4 py-3 text-dash-text/70 hover:bg-white/30 rounded-xl transition-all font-medium">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
+                <span>Stack dev</span>
+            </a>
+            <a href="#" class="flex items-center gap-3 px-4 py-3 text-dash-text/70 hover:bg-white/30 rounded-xl transition-all font-medium">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                <span>Settings</span>
+            </a>
+            <div class="flex items-center gap-3 px-4 py-3 text-dash-text/70 mt-auto font-medium justify-between group">
+                <div class="flex items-center gap-3">
+                    <svg class="w-5 h-5 dark:hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"></path></svg>
+                    <svg class="w-5 h-5 hidden dark:block text-yellow-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"></path></svg>
+                    <span id="theme-text">Light Mode</span>
+                </div>
+                <!-- Toggle Button -->
+                <button type="button" id="theme-toggle-btn" aria-label="Toggle Dark Mode" class="w-10 h-5 bg-black/10 dark:bg-dash-cardBlue rounded-full relative shadow-inner cursor-pointer transition-colors duration-300 outline-none">
+                    <div id="theme-toggle-dot" class="w-6 h-6 bg-dash-text dark:bg-white rounded-full absolute -top-0.5 left-0 shadow-md transition-transform duration-300 flex items-center justify-center">
+                    </div>
+                </button>
+            </div>
+        </nav>
+    </aside>
+
+    <!-- Main Content Area -->
+    <div class="flex-grow flex flex-col h-full overflow-hidden">
+        
+        <!-- Header -->
+        <header class="h-24 flex items-center justify-between px-8 flex-shrink-0">
+            <div class="relative w-80 lg:w-[400px]">
+                <input type="text" placeholder="Type in to search .." class="w-full h-11 pl-6 pr-10 rounded-full bg-white shadow-sm border-white border text-sm focus:outline-none placeholder-dash-textLight text-dash-text font-medium">
+                <svg class="w-5 h-5 absolute right-4 top-1/2 -translate-y-1/2 text-dash-textLight" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+            </div>
+            
+            <div class="flex items-center gap-6 text-dash-textLight">
+                <button class="hover:text-dash-text transition-colors"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2H6a2 2 0 01-2-2V6zM14 6a2 2 0 012-2h2a2 2 0 012 2v2a2 2 0 01-2 2h-2a2 2 0 01-2-2V6z"></path></svg></button>
+                <button class="hover:text-dash-text transition-colors"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg></button>
+                <button class="hover:text-dash-text transition-colors"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"></path></svg></button>
+                <div class="h-6 w-px bg-dash-textLight/30 mx-2"></div>
+                <button class="relative hover:text-dash-text transition-colors">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                    <span class="absolute -top-1.5 -right-1.5 bg-dash-cardBlue text-white text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center border border-white">11</span>
+                </button>
+                <button class="hover:text-dash-text transition-colors"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg></button>
+                <button class="relative hover:text-dash-text transition-colors text-dash-text">
+                    <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 20 20"><path d="M10 2a6 6 0 00-6 6v3.586l-.707.707A1 1 0 004 14h12a1 1 0 00.707-1.707L16 11.586V8a6 6 0 00-6-6zM10 18a3 3 0 01-3-3h6a3 3 0 01-3 3z"></path></svg>
+                    <span class="absolute -top-1 -right-1 bg-dash-cardBlue text-white text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center border border-white">7</span>
+                </button>
+                <div class="relative group ml-2 py-2">
+                    <div class="w-10 h-10 rounded-full bg-white shadow-sm border border-white/50 p-0.5 overflow-hidden cursor-pointer dark:border-white/10 dark:bg-[#1e2030]/60">
+                        <img src="https://i.pravatar.cc/150?img=11" alt="Profile"
+                            class="w-full h-full rounded-full object-cover">
+                    </div>
+                    <!-- Dropdown Menu -->
+                    <div class="absolute right-0 top-full mt-1 w-48 bg-white/90 backdrop-blur-md rounded-xl shadow-[0_10px_40px_rgba(0,0,0,0.1)] border border-white opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-300 z-50 transform origin-top-right group-hover:translate-y-0 translate-y-2 dark:bg-[#1e2030]/95 dark:border-white/10">
+                        <div class="p-2 space-y-1">
+                            <a href="#" class="flex items-center gap-2 px-3 py-2 text-sm text-dash-text dark:text-dash-textLight hover:bg-white dark:hover:bg-white/5 rounded-lg transition-colors font-medium">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
+                                View Profile
+                            </a>
+                            <a href="#" class="flex items-center gap-2 px-3 py-2 text-sm text-dash-text dark:text-dash-textLight hover:bg-white dark:hover:bg-white/5 rounded-lg transition-colors font-medium">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0..."></path></svg>
+                                Settings
+                            </a>
+                            <div class="border-t border-dash-textLight/20 dark:border-white/10 my-1"></div>
+                            <a href="#" class="flex items-center gap-2 px-3 py-2 text-sm text-red-500 hover:bg-red-50 dark:hover:bg-red-500/10 rounded-lg transition-colors font-medium">
+                                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
+                                Logout
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Dashboard Content Container (Rounded Top Left) -->
+        <main class="main-content-bg flex-grow flex flex-col md:flex-row gap-6 p-8 overflow-y-auto w-full relative">
+            
+            <!-- Left Column -->
+            <div class="flex-1 flex flex-col gap-6">
+                <!-- Top Left Section -->
+                <div class="flex flex-col xl:flex-row gap-6">
+                    <!-- Current Job Card -->
+                    <div class="flex-1">
+                        <h2 class="text-2xl font-bold text-dash-cardBlue mb-1">Current Job</h2>
+                        <p class="text-sm text-dash-textLight mb-4 font-medium">Your last login was 12 January 2026</p>
+                        <div class="w-full h-72 rounded-2xl p-6 relative overflow-hidden shadow-lg border border-white" style="background: radial-gradient(circle at top right, #38c1b6 0%, transparent 40%), radial-gradient(circle at top left, #f3586d 0%, transparent 50%), radial-gradient(circle at bottom left, #fad761 0%, transparent 60%), radial-gradient(circle at bottom right, #5dbbbf 0%, transparent 50%); background-color: #f7a972;">
+                        </div>
+                    </div>
+
+                    <!-- Gradients & Total Amount -->
+                    <div class="w-64 flex flex-col pt-2">
+                        <div class="flex justify-between items-end mb-4">
+                            <div>
+                                <h3 class="text-sm font-semibold text-dash-text mb-0.5">Total Amount Paid</h3>
+                                <div class="text-[10px] text-dash-textLight flex items-center gap-1">
+                                    <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                                    10/03/2025 - 10/04/2026
+                                </div>
+                            </div>
+                            <div class="text-right">
+                                <div class="text-xl font-bold text-dash-cardBlue">₹22,782</div>
+                                <div class="text-xs text-green-500 font-semibold">+189 ↑</div>
+                            </div>
+                        </div>
+
+                        <!-- 3x2 Grid of Gradients -->
+                        <div class="grid grid-cols-2 gap-3 mb-4">
+                            <!-- Gradient Rectangles -->
+                            <div class="h-16 rounded-xl shadow-sm border border-white/50" style="background: linear-gradient(135deg, #f7b764 0%, #aa64a2 50%, #4ea5ac 100%);"></div>
+                            <div class="h-16 rounded-xl shadow-sm border border-white/50" style="background: linear-gradient(135deg, #f7b764 0%, #aa64a2 50%, #4ea5ac 100%); opacity: 0.9"></div>
+                            <div class="h-16 rounded-xl shadow-sm border border-white/50" style="background: linear-gradient(135deg, #f7b764 0%, #aa64a2 50%, #4ea5ac 100%); opacity: 0.8"></div>
+                            <div class="h-16 rounded-xl shadow-sm border border-white/50" style="background: linear-gradient(135deg, #f7b764 0%, #aa64a2 50%, #4ea5ac 100%); opacity: 0.7"></div>
+                            <div class="h-16 rounded-xl shadow-sm border border-white/50" style="background: linear-gradient(135deg, #f7b764 0%, #aa64a2 50%, #4ea5ac 100%); opacity: 0.85"></div>
+                            <div class="h-16 rounded-xl shadow-sm border border-white/50" style="background: linear-gradient(135deg, #f7b764 0%, #aa64a2 50%, #4ea5ac 100%); opacity: 0.95"></div>
+                        </div>
+                        
+                        <button class="w-full py-3 rounded-xl bg-dash-cardBlue text-white font-semibold text-sm shadow-[0_4px_12px_rgba(27,50,107,0.3)] hover:opacity-90 transition-opacity">More</button>
+                    </div>
+                </div>
+
+                <!-- Bottom Section: Overview Chart -->
+                <div class="flex gap-8 mt-4 pt-4 border-t border-white/60">
+                    <div class="w-1/3">
+                        <div class="flex justify-between items-center mb-6">
+                            <h3 class="font-semibold text-dash-text text-sm">Working Hours<br><span class="text-base text-dash-cardBlue font-bold">Overview</span></h3>
+                            <div class="text-[10px] text-dash-textLight flex items-center font-medium">Sort by: <span class="text-dash-text ml-1">Weekly</span> <svg class="w-3 h-3 ml-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path></svg></div>
+                        </div>
+                        <div class="flex justify-between">
+                            <div class="text-center pr-4">
+                                <div class="text-2xl font-bold text-dash-text">123</div>
+                                <div class="text-xs text-dash-textLight font-medium">Hour</div>
+                            </div>
+                            <div class="text-center px-4 border-l border-r border-dash-textLight/30">
+                                <div class="text-2xl font-bold text-dash-text">45</div>
+                                <div class="text-xs text-dash-textLight font-medium">Time</div>
+                            </div>
+                            <div class="text-center pl-4">
+                                <div class="text-2xl font-bold text-dash-text">678</div>
+                                <div class="text-xs text-dash-textLight font-medium">Second</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="w-2/3 h-40 relative">
+                        <canvas id="overviewChart"></canvas>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Column -->
+            <div class="w-80 flex flex-col gap-6 flex-shrink-0 pl-6 border-l border-white/60 border-dashed">
+                
+                <!-- Last Transaction -->
+                <div>
+                    <div class="flex justify-between items-center mb-1">
+                        <h3 class="font-bold text-dash-cardBlue">Last transaction</h3>
+                        <button class="text-dash-textLight hover:text-dash-text">•••</button>
+                    </div>
+                    <p class="text-xs text-dash-textLight mb-5 font-medium">Your last login was 12 January 2023</p>
+                    
+                    <div class="flex flex-col gap-4">
+                        <!-- Item 1 -->
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-xl bg-red-400 text-white flex items-center justify-center font-bold text-sm shadow-sm opacity-90">J</div>
+                                <div>
+                                    <div class="text-sm font-bold text-dash-cardBlue">John Doe</div>
+                                    <div class="text-xs text-[#5dbbbf] font-medium">Home buying</div>
+                                </div>
+                            </div>
+                            <div class="text-sm font-bold text-dash-text">₹3,000</div>
+                        </div>
+                        <!-- Item 2 -->
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-xl bg-orange-400 text-white flex items-center justify-center font-bold text-sm shadow-sm opacity-90">F</div>
+                                <div>
+                                    <div class="text-sm font-bold text-dash-cardBlue">Fitriyatul Doe</div>
+                                    <div class="text-xs text-[#5dbbbf] font-medium">Investing</div>
+                                </div>
+                            </div>
+                            <div class="text-sm font-bold text-dash-text">₹4,000</div>
+                        </div>
+                        <!-- Item 3 -->
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-xl bg-green-400 text-white flex items-center justify-center font-bold text-sm shadow-sm opacity-90">K</div>
+                                <div>
+                                    <div class="text-sm font-bold text-dash-cardBlue">Khoiriyah Doe</div>
+                                    <div class="text-xs text-[#5dbbbf] font-medium">Technology</div>
+                                </div>
+                            </div>
+                            <div class="text-sm font-bold text-dash-text">₹3,500</div>
+                        </div>
+                        <!-- Item 4 -->
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-xl bg-blue-400 text-white flex items-center justify-center font-bold text-sm shadow-sm opacity-90">A</div>
+                                <div>
+                                    <div class="text-sm font-bold text-dash-cardBlue">Anna Doe</div>
+                                    <div class="text-xs text-[#5dbbbf] font-medium">Holiday</div>
+                                </div>
+                            </div>
+                            <div class="text-sm font-bold text-dash-text">₹1,500</div>
+                        </div>
+                        <!-- Item 5 -->
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center gap-3">
+                                <div class="w-10 h-10 rounded-xl bg-purple-400 text-white flex items-center justify-center font-bold text-sm shadow-sm opacity-90">S</div>
+                                <div>
+                                    <div class="text-sm font-bold text-dash-cardBlue">Sella Doe</div>
+                                    <div class="text-xs text-[#5dbbbf] font-medium">Shopping</div>
+                                </div>
+                            </div>
+                            <div class="text-sm font-bold text-dash-text">₹4,500</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Payment Holder -->
+                <div class="mt-4 pt-4 border-t border-white/60">
+                    <div class="flex justify-between items-center mb-5">
+                        <div class="flex items-center gap-2">
+                            <h3 class="font-bold text-dash-cardBlue">Payment Holder Name</h3>
+                            <span class="bg-[#dcf4ec] text-[#2ba091] text-[10px] font-bold px-1.5 py-0.5 rounded-full">14</span>
+                        </div>
+                        <button class="text-dash-textLight hover:text-dash-text">•••</button>
+                    </div>
+
+                    <div class="flex flex-col gap-4">
+                        <!-- Item 1 -->
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-full bg-blue-100 text-blue-500 flex items-center justify-center font-bold text-xs shadow-inner">JD</div>
+                            <div>
+                                <div class="text-sm font-bold text-dash-cardBlue">John Doe</div>
+                                <div class="text-[10px] text-dash-textLight">Lorem Ipsum is simply ...</div>
+                            </div>
+                        </div>
+                        <!-- Item 2 -->
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-full bg-red-100 text-red-500 flex items-center justify-center font-bold text-xs shadow-inner">FD</div>
+                            <div>
+                                <div class="text-sm font-bold text-dash-cardBlue">Fitriyatul Doe</div>
+                                <div class="text-[10px] text-dash-textLight">industry's standard is ...</div>
+                            </div>
+                        </div>
+                        <!-- Item 3 -->
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-full bg-purple-100 text-purple-500 flex items-center justify-center font-bold text-xs shadow-inner">KD</div>
+                            <div>
+                                <div class="text-sm font-bold text-dash-cardBlue">Khoiriyah Doe</div>
+                                <div class="text-[10px] text-dash-textLight">dummy text ever since ...</div>
+                            </div>
+                        </div>
+                        <!-- Item 4 -->
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-full bg-yellow-100 text-yellow-600 flex items-center justify-center font-bold text-xs shadow-inner">AD</div>
+                            <div>
+                                <div class="text-sm font-bold text-dash-cardBlue">Anna Doe</div>
+                                <div class="text-[10px] text-dash-textLight">unknown printer took a ...</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </main>
+    </div>
+
+    <script>
+        // Chart.js initialization
+        const ctx = document.getElementById('overviewChart').getContext('2d');
+        
+        const gradient = ctx.createLinearGradient(0, 0, 0, 160);
+        gradient.addColorStop(0, 'rgba(247, 183, 100, 0.4)');
+        gradient.addColorStop(1, 'rgba(247, 183, 100, 0.0)');
+
+        new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: ['01 Jan', '02 Feb', '03 Mar', '04 Apr', '05 May'],
+                datasets: [{
+                    label: 'Hours',
+                    data: [750, 480, 800, 300, 600],
+                    borderColor: '#f7b764',
+                    borderWidth: 3,
+                    backgroundColor: gradient,
+                    fill: true,
+                    tension: 0.4,
+                    pointBackgroundColor: '#fff',
+                    pointBorderColor: '#f7b764',
+                    pointBorderWidth: 2,
+                    pointRadius: [0, 0, 0, 6, 0], // Only highlight 4th point like in design
+                    pointHoverRadius: 6
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        max: 1000,
+                        ticks: {
+                            stepSize: 200,
+                            color: '#9495b5',
+                            font: { size: 10 }
+                        },
+                        border: { display: false },
+                        grid: {
+                            color: 'rgba(255, 255, 255, 0.6)',
+                            drawBorder: false,
+                        }
+                    },
+                    x: {
+                        ticks: {
+                            color: '#9495b5',
+                            font: { size: 10 }
+                        },
+                        border: { display: false },
+                        grid: { display: false }
+                    }
+                }
+            }
+        });
+    </script>
+    <script src="theme.js"></script>
+</body>
+</html>

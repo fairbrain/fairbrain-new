@@ -1,0 +1,186 @@
+@font-face {
+    font-family: 'Agency FB';
+    src: url('../fonts/agency.otf');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Vartigo';
+    src: url('../fonts/Vartigo.otf');
+    font-weight: normal;
+    font-style: normal;
+}
+
+.text-agency {
+    font-family: 'Agency FB';
+}
+
+.text-vartigo {
+    font-family: 'Vartigo';
+}
+
+/* Custom styles to complement Tailwind */
+.bg-hero-pattern {
+    background-image:
+        radial-gradient(circle at top right, rgba(249, 134, 22, 0.08) 0%, transparent 40%),
+        radial-gradient(circle at bottom left, rgba(107, 64, 158, 0.08) 0%, transparent 40%);
+    background-color: #fcfcfc;
+}
+
+.portfolio-card {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.portfolio-card:hover {
+    transform: scale(1.1);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+.custom-bullet::before {
+    content: '✓';
+    color: #6B409E;
+    font-weight: bold;
+    display: inline-block;
+    width: 1em;
+    margin-left: -1em;
+}
+
+.stat-circle {
+    position: relative;
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: white;
+}
+
+.stat-circle::before {
+    content: '';
+    position: absolute;
+    top: -8px;
+    left: -8px;
+    right: -8px;
+    bottom: -8px;
+    border-radius: 50%;
+    border: 8px solid #F98616;
+    border-top-color: transparent;
+    /* Create the broken circle effect */
+    transform: rotate(45deg);
+}
+
+/* Swiper Customizations */
+.client-swiper .swiper-wrapper {
+    transition-timing-function: linear !important;
+}
+
+.custom-swiper-bullet {
+    background-color: #F98616 !important;
+    opacity: 0.3;
+    transition: all 0.3s ease-in-out;
+    display: inline-block;
+}
+
+.custom-swiper-bullet.swiper-pagination-bullet-active {
+    opacity: 1;
+    background-color: #6B409E !important;
+    transform: scale(1.2);
+}
+
+/* CSS Marquee for Clients */
+@keyframes scroller {
+    0% {
+        transform: translateX(0);
+    }
+
+    100% {
+        transform: translateX(-100%);
+    }
+}
+
+.animate-scroller {
+    animation: scroller 25s linear infinite;
+    display: flex;
+    white-space: nowrap;
+}
+
+.group:hover .animate-scroller {
+    animation-play-state: paused;
+}
+
+.heartbeat {
+    -webkit-animation: pulsate-bck 2s ease-in-out infinite both;
+    animation: pulsate-bck 2s ease-in-out infinite both;
+}
+
+#hero-section .head-1,
+#hero-section .head-3 {
+    filter: blur(50px);
+    scale: 0;
+    opacity: 0;
+}
+
+#hero-section .head-2 {
+    clip-path: polygon(50% 0, 50% 0, 50% 100%, 50% 100%);
+    padding: 40px;
+}
+
+
+.swiper-slide-active .head-1,
+.swiper-slide-active .head-3 {
+    filter: blur(0px) !important;
+    scale: 1 !important;
+    opacity: 1 !important;
+    transition: all 1s ease-in-out;
+}
+
+.swiper-slide-active .head-2 {
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%) !important;
+    rotate: -5deg;
+    transition: all 1s ease-in-out;
+}
+
+
+
+/* ANIMATIONS */
+
+/**
+ * ----------------------------------------
+ * animation heartbeat
+ * ----------------------------------------
+ */
+@-webkit-keyframes pulsate-bck {
+    0% {
+        -webkit-transform: scale(1);
+        transform: scale(1);
+    }
+
+    50% {
+        -webkit-transform: scale(0.9);
+        transform: scale(0.9);
+    }
+
+    100% {
+        -webkit-transform: scale(1);
+        transform: scale(1);
+    }
+}
+
+@keyframes pulsate-bck {
+    0% {
+        -webkit-transform: scale(1);
+        transform: scale(1);
+    }
+
+    50% {
+        -webkit-transform: scale(0.9);
+        transform: scale(0.9);
+    }
+
+    100% {
+        -webkit-transform: scale(1);
+        transform: scale(1);
+    }
+}

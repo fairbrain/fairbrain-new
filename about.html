@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us - FairBrain</title>
+
+    <!-- Google Fonts: Poppins -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="assets/css/style.css">
+
+    <!-- Tailwind CSS (CDN) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Poppins', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            purple: '#6B409E',
+                            purpleLight: '#8A5FB8',
+                            orange: '#F98616',
+                            yellow: '#FFCA2C',
+                            dark: '#333333',
+                            gray: '#F3F4F6'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- GSAP for animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.15/dist/SplitText.min.js"></script>
+</head>
+
+<body class="font-sans text-brand-dark antialiased bg-white overflow-x-hidden">
+    <!-- Header -->
+    <header class="w-full bg-white shadow-sm sticky top-0 z-50 text-agency">
+        <div class="container mx-auto px-4 lg:px-8 py-3 flex items-center justify-between">
+            <!-- Logo -->
+            <div class="flex items-center gap-2">
+                <a href="index.html">
+                    <img src="assets/images/logo/Fairbrain Logo PNG.png" width="300" height="150" alt="FairBrain Logo"
+                        class="w-40">
+                </a>
+            </div>
+
+            <!-- Navbar -->
+            <nav class="hidden md:flex space-x-6 lg:space-x-8 font-medium text-sm lg:text-base">
+                <a href="index.html" class="text-brand-dark hover:text-brand-orange transition-colors">Home</a>
+                <a href="about.html" class="text-brand-orange border-b-2 border-brand-orange transition-colors">About
+                    Us</a>
+                <a href="gallery.html" class="text-brand-dark hover:text-brand-orange transition-colors">Web Design</a>
+                <a href="service.html" class="text-brand-dark hover:text-brand-orange transition-colors">Services</a>
+                <a href="portfolio.html" class="text-brand-dark hover:text-brand-orange transition-colors">Portfolio</a>
+                <a href="contact.html" class="text-brand-dark hover:text-brand-orange transition-colors">Contact Us</a>
+            </nav>
+
+            <!-- Login / Mobile Menu -->
+            <div class="flex items-center gap-4">
+                <button onclick="window.location.href='login.html'"
+                    class="bg-brand-dark hover:bg-black text-white px-5 py-2.5 rounded-md font-semibold text-sm transition-colors flex items-center gap-2 shadow-sm">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
+                        stroke="currentColor" class="w-5 h-5">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
+                    </svg>
+                    <span>Login</span>
+                </button>
+                <button class="md:hidden text-brand-dark p-2" id="mobile-menu-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                        stroke="currentColor" class="w-6 h-6">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+                    </svg>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Mobile Menu Overlay -->
+    <div id="mobile-menu"
+        class="fixed inset-y-0 right-0 z-[100] w-64 bg-white shadow-2xl transform translate-x-full transition-transform duration-300 md:hidden flex flex-col items-center pt-8 border-l border-brand-orange/20">
+        <button id="close-mobile-menu" class="absolute top-6 right-6 text-brand-dark hover:text-brand-orange">
+            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+            </svg>
+        </button>
+        <div class="flex flex-col gap-6 w-full text-center px-4 mt-8">
+            <a href="index.html"
+                class="text-brand-dark hover:text-brand-orange text-lg font-bold border-b pb-2">Home</a>
+            <a href="about.html" class="text-brand-orange text-lg font-bold border-b pb-2">About Us</a>
+            <a href="gallery.html" class="text-brand-dark hover:text-brand-orange text-lg font-bold border-b pb-2">Web
+                Design</a>
+            <a href="service.html"
+                class="text-brand-dark hover:text-brand-orange text-lg font-bold border-b pb-2">Services</a>
+            <a href="portfolio.html"
+                class="text-brand-dark hover:text-brand-orange text-lg font-bold border-b pb-2">Portfolio</a>
+            <a href="contact.html" class="text-brand-dark hover:text-brand-orange text-lg font-bold">Contact Us</a>
+            <button onclick="window.location.href='login.html'"
+                class="bg-gradient-to-r from-brand-orange to-brand-yellow text-white px-6 py-3 rounded-md font-semibold mt-4 shadow-md w-full">Login
+                Account</button>
+        </div>
+    </div>
+
+    <main>
+        <!-- Banner Section -->
+        <section class="bg-[#F0E6FF] py-16 lg:py-24 text-center">
+            <div class="container mx-auto px-4 lg:px-8">
+                <h2
+                    class="text-5xl md:text-7xl font-extrabold text-brand-purple mb-2 text-vartigo drop-shadow-sm leading-tight">
+                    About Us</h2>
+                <h3 class="text-xl md:text-2xl text-gray-500 font-medium font-sans">Our Creative Legacy</h3>
+            </div>
+        </section>
+
+        <!-- Content Section -->
+        <section class="py-16 lg:py-24 xl:py-32 relative text-agency" id="about-content">
+            <!-- SVG Scroll Line Background -->
+            <div class="absolute inset-0 z-0 hidden lg:block opacity-40" id="svg-container">
+                <svg viewBox="0 0 1200 1600" width="100%" height="100%" preserveAspectRatio="none" style="position: absolute; top: 0; left: 0; pointer-events: none;">
+                    <defs>
+                        <mask id="line-mask">
+                            <path id="mask-path" d="M 80 100 L 80 600 L 1120 600 L 1120 1110 L 80 1110 L 80 1600" stroke="white" stroke-width="16" fill="none" stroke-linecap="round" />
+                        </mask>
+                    </defs>
+                    <path d="M 80 100 L 80 600 L 1120 600 L 1120 1110 L 80 1110 L 80 1600" stroke="#000000" stroke-width="2.5" stroke-dasharray="10, 12" fill="none" mask="url(#line-mask)" />
+                </svg>
+            </div>
+
+            <div class="container mx-auto px-4 lg:px-8 max-w-7xl relative z-10 flex flex-col gap-24 xl:gap-40">
+                <!-- Row 1 -->
+                <div class="flex flex-col md:flex-row gap-10 lg:gap-20 fade-block">
+                    <div class="w-full md:w-[30%]">
+                        <h3 class="text-3xl md:text-4xl font-extrabold text-brand-purple uppercase leading-none">
+                            PASSIONATE CREATIVES SPECIALIZING IN BRANDING & PACKAGE DESIGN</h3>
+                    </div>
+                    <div
+                        class="w-full md:w-[70%] space-y-6 text-gray-700 font-medium font-sans text-sm md:text-base leading-relaxed">
+                        <h4 class="text-2xl font-bold text-brand-dark uppercase text-agency">WHO WE ARE</h4>
+                        <p>At Fairbrain, we are more than just an agency - we are a powerhouse of creative thinking,
+                            specializing in branding, packaging design, and visual storytelling. With decades of
+                            expertise, our team of passionate designers transforms ideas into impactful brand
+                            experiences that not only look exceptional but also perform in the market.</p>
+                        <p>We believe packaging is not just design - it's communication. Every pack we create is
+                            strategically crafted to highlight product value, attract attention on shelves, and build a
+                            strong emotional connection with consumers. Our approach blends creativity with deep market
+                            understanding to ensure your brand stands out in a competitive landscape.</p>
+                        <p>At Fairbrain, collaboration is at the heart of everything we do. We work closely with our
+                            clients, maintaining transparency, trust, and a smooth workflow to deliver results that
+                            exceed expectations.</p>
+                        <p>Our mission is simple - to provide powerful branding solutions that drive growth. From
+                            packaging to print, and from branding to social media marketing, we ensure your product not
+                            only reaches the market but dominates it.</p>
+                    </div>
+                </div>
+
+                <!-- Row 2 -->
+                <div class="flex flex-col md:flex-row-reverse gap-10 lg:gap-20 fade-block">
+                    <div class="w-full md:w-[30%] text-left md:text-right">
+                        <h3 class="text-3xl md:text-4xl font-extrabold text-brand-purple uppercase leading-none">BRING
+                            LIFE TO BRANDS WITH RIGHT STRATEGY & CREATIVITY</h3>
+                    </div>
+                    <div
+                        class="w-full md:w-[70%] space-y-6 text-gray-700 font-medium font-sans text-sm md:text-base leading-relaxed">
+                        <h4
+                            class="text-2xl font-bold text-brand-dark uppercase text-agency text-left md:text-right hidden md:block opacity-0">
+                            .</h4>
+                        <h4 class="text-2xl font-bold text-brand-dark uppercase text-agency">WHAT WE DO</h4>
+                        <p>At Fairbrain, every great design begins with deep understanding. We invest time to truly know
+                            you, your business, and the unique strengths of your products and services. From product
+                            details to customer behavior and market competition - we study every aspect to build a
+                            strong foundation.</p>
+                        <p>Our process then moves into a collaborative ideation phase, where our creative experts come
+                            together to exchange ideas, backed by detailed market research and competitive analysis.
+                            This ensures that every concept we develop is not just creative, but strategically sound and
+                            market-ready.</p>
+                        <p>Finally, we infuse your brand's core essence, values, and identity into the design. The
+                            result is a perfect balance of strategy and creativity - delivering designs that are not
+                            only visually compelling but also highly relevant, impactful, and engaging.</p>
+                        <p>At Fairbrain, we don't just design - we craft experiences that connect, communicate, and
+                            convert.</p>
+                    </div>
+                </div>
+
+                <!-- Row 3 -->
+                <div class="flex flex-col md:flex-row gap-10 lg:gap-20 fade-block">
+                    <div class="w-full md:w-[30%]">
+                        <h3 class="text-3xl md:text-4xl font-extrabold text-brand-purple uppercase leading-none">WELL
+                            EXPERIENCED IN TACKLING & SOLVING YOUR BRANDING PROBLEMS</h3>
+                    </div>
+                    <div
+                        class="w-full md:w-[70%] space-y-6 text-gray-700 font-medium font-sans text-sm md:text-base leading-relaxed">
+                        <h4 class="text-2xl font-bold text-brand-dark uppercase text-agency">HISTORY</h4>
+                        <p>For over three decades, Fairbrain has been bringing brands to life with unmatched dedication,
+                            creativity, and strategic thinking. From our base in Kolkata, we collaborate with ambitious
+                            brands of every scale - from emerging businesses to established national and international
+                            companies.</p>
+                        <p>Since our inception, we have built strong, lasting relationships with our clients by deeply
+                            understanding their unique challenges, creative needs, and market goals. Our strength lies
+                            in adapting, evolving, and delivering solutions that are not just visually appealing but
+                            commercially effective.</p>
+                        <p>With a highly skilled team of creative experts, we have successfully redesigned,
+                            repositioned, and launched numerous brands across diverse industries. Our years of
+                            experience give us a clear understanding of the real challenges businesses face - from
+                            growth hurdles to market competition - enabling us to solve complex problems with clarity
+                            and confidence.</p>
+                        <p>At Fairbrain, we don't just create brands - we shape their journey, strengthen their
+                            identity, and drive them towards sustained growth.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer Section (Copied from index.html) -->
+        <footer
+            class="bg-gradient-to-r from-brand-orange via-brand-yellow to-brand-yellow pt-16 pb-8 text-brand-dark text-agency">
+            <div class="container mx-auto px-4 lg:px-8">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
+                    <!-- Column 1 -->
+                    <div>
+                        <div class="flex items-center gap-3 mb-6 text-brand-dark">
+                            <img src="./assets/images/logo/Fairbrain Logo PNG.png" alt=""
+                                class="w-auto bg-[#ffffff] rounded-2xl p-2">
+                        </div>
+                        <div class="flex items-start gap-3 mb-4">
+                            <svg class="w-5 h-5 mt-1 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z">
+                                </path>
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                            </svg>
+                            <p class="text-sm">92A, Jatindra Mohan Avenue, Kolkata <br> 700006, West
+                                Bengal</p>
+                        </div>
+                        <div class="flex items-center gap-3 mb-4">
+                            <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z">
+                                </path>
+                            </svg>
+                            <p class="text-sm">+91-9830438186 / +91-9051838184</p>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z">
+                                </path>
+                            </svg>
+                            <p class="text-sm">contact@fairbrain.in</p>
+                        </div>
+                    </div>
+
+                    <!-- Column 2 -->
+                    <div>
+                        <h3 class="font-extrabold text-lg mb-6 uppercase tracking-wider">QUICK LINKS</h3>
+                        <ul class="space-y-3 text-sm">
+                            <li><a href="index.html"
+                                    class="hover:text-white transition-colors flex items-center gap-2"><span
+                                        class="w-1.5 h-1.5 bg-brand-dark rounded-full inline-block"></span> Home</a>
+                            </li>
+                            <li><a href="about.html"
+                                    class="hover:text-white transition-colors flex items-center gap-2"><span
+                                        class="w-1.5 h-1.5 bg-brand-dark rounded-full inline-block"></span> About Us</a>
+                            </li>
+                            <li><a href="gallery.html"
+                                    class="hover:text-white transition-colors flex items-center gap-2"><span
+                                        class="w-1.5 h-1.5 bg-brand-dark rounded-full inline-block"></span> Web
+                                    Design</a>
+                            </li>
+                            <li><a href="service.html"
+                                    class="hover:text-white transition-colors flex items-center gap-2"><span
+                                        class="w-1.5 h-1.5 bg-brand-dark rounded-full inline-block"></span> Services</a>
+                            </li>
+                            <li><a href="portfolio.html"
+                                    class="hover:text-white transition-colors flex items-center gap-2"><span
+                                        class="w-1.5 h-1.5 bg-brand-dark rounded-full inline-block"></span>
+                                    Portfolio</a></li>
+                            <li><a href="contact.html"
+                                    class="hover:text-white transition-colors flex items-center gap-2"><span
+                                        class="w-1.5 h-1.5 bg-brand-dark rounded-full inline-block"></span> Contact
+                                    Us</a></li>
+                            <li><a href="#" class="hover:text-white transition-colors flex items-center gap-2"><span
+                                        class="w-1.5 h-1.5 bg-brand-dark rounded-full inline-block"></span> Privacy
+                                    Policy</a></li>
+                        </ul>
+                    </div>
+
+                    <!-- Column 3 -->
+                    <div>
+                        <h3 class="font-extrabold text-lg mb-6 uppercase tracking-wider">COMMUNITY</h3>
+                        <ul class="space-y-3 text-sm">
+                            <li><a href="#" class="hover:text-white transition-colors flex items-center gap-2"><span
+                                        class="w-1.5 h-1.5 bg-brand-dark rounded-full inline-block"></span> Our
+                                    Process</a></li>
+                            <li><a href="#" class="hover:text-white transition-colors flex items-center gap-2"><span
+                                        class="w-1.5 h-1.5 bg-brand-dark rounded-full inline-block"></span> Our
+                                    network</a></li>
+                            <li><a href="#" class="hover:text-white transition-colors flex items-center gap-2"><span
+                                        class="w-1.5 h-1.5 bg-brand-dark rounded-full inline-block"></span> Products</a>
+                            </li>
+                            <li><a href="#" class="hover:text-white transition-colors flex items-center gap-2"><span
+                                        class="w-1.5 h-1.5 bg-brand-dark rounded-full inline-block"></span> Quality and
+                                    Testing</a></li>
+                        </ul>
+                    </div>
+
+                    <!-- Column 4 -->
+                    <div>
+                        <h3 class="font-extrabold text-lg mb-6 uppercase tracking-wider">GET IN TOUCH</h3>
+                        <ul class="space-y-3 text-sm mb-6">
+                            <li><a href="#" class="hover:text-white transition-colors flex items-center gap-2"><span
+                                        class="w-1.5 h-1.5 bg-brand-dark rounded-full inline-block"></span> Facebook</a>
+                            </li>
+                            <li><a href="#" class="hover:text-white transition-colors flex items-center gap-2"><span
+                                        class="w-1.5 h-1.5 bg-brand-dark rounded-full inline-block"></span>
+                                    Instagram</a></li>
+                            <li><a href="#" class="hover:text-white transition-colors flex items-center gap-2"><span
+                                        class="w-1.5 h-1.5 bg-brand-dark rounded-full inline-block"></span> Twitter</a>
+                            </li>
+                        </ul>
+                        <!-- Social Icons -->
+                        <div class="flex gap-4">
+                            <a href="#"
+                                class="w-10 h-10 flex items-center justify-center rounded-full bg-brand-purple text-white hover:bg-white hover:text-brand-dark transition-colors shadow">
+                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                    <path
+                                        d="M22.675 0H1.325C.593 0 0 .593 0 1.325v21.351C0 23.407.593 24 1.325 24H12.82v-9.294H9.692v-3.622h3.128V8.413c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.795.143v3.24l-1.918.001c-1.504 0-1.795.715-1.795 1.763v2.313h3.587l-.467 3.622h-3.12V24h6.116c.73 0 1.323-.593 1.323-1.325V1.325C24 .593 23.407 0 22.675 0z" />
+                                </svg>
+                            </a>
+                            <a href="#"
+                                class="w-10 h-10 flex items-center justify-center rounded-full bg-brand-purple text-white hover:bg-white hover:text-brand-dark transition-colors shadow">
+                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                    <path
+                                        d="M23.953 4.57a10 10 0 01-2.825.775 4.958 4.958 0 002.163-2.723c-.951.555-2.005.959-3.127 1.184a4.92 4.92 0 00-8.384 4.482C7.69 8.095 4.067 6.13 1.64 3.162a4.822 4.822 0 00-.666 2.475c0 1.71.87 3.213 2.188 4.096a4.904 4.904 0 01-2.228-.616v.06a4.923 4.923 0 003.946 4.827 4.996 4.996 0 01-2.212.085 4.936 4.936 0 004.604 3.417 9.867 9.867 0 01-6.102 2.105c-.39 0-.779-.023-1.17-.067a13.995 13.995 0 007.557 2.209c9.053 0 13.998-7.496 13.998-13.985 0-.21 0-.42-.015-.63A9.935 9.935 0 0024 4.59z" />
+                                </svg>
+                            </a>
+                            <a href="#"
+                                class="w-10 h-10 flex items-center justify-center rounded-full bg-brand-purple text-white hover:bg-white hover:text-brand-dark transition-colors shadow">
+                                <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                                    <path
+                                        d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z" />
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="text-center pt-8 border-t border-brand-dark/20 text-brand-purple">
+                    <p class="text-sm">&copy; Copyright <strong>FAIRBRAIN</strong> All Rights Reserved.
+                    </p>
+                </div>
+            </div>
+        </footer>
+    </main>
+
+    <!-- Custom Scripts for About Page Animation -->
+    <script>
+        document.addEventListener("DOMContentLoaded", (event) => {
+            gsap.registerPlugin(ScrollTrigger);
+
+            // Setup Fade Blocks
+            gsap.utils.toArray('.fade-block').forEach((block, i) => {
+                gsap.from(block, {
+                    y: 60,
+                    opacity: 0,
+                    duration: 1.2,
+                    ease: "power2.out",
+                    scrollTrigger: {
+                        trigger: block,
+                        start: "top 85%",
+                        toggleActions: "play none none reverse"
+                    }
+                });
+            });
+
+            // SVG Line Draw Animation
+            const maskPath = document.getElementById("mask-path");
+            if (maskPath) {
+                const length = maskPath.getTotalLength();
+
+                // Keep the dashed styling on the main path, but animate the mask path length
+                gsap.set(maskPath, {
+                    strokeDasharray: length,
+                    strokeDashoffset: length
+                });
+
+                gsap.to(maskPath, {
+                    strokeDashoffset: 0,
+                    ease: "none",
+                    scrollTrigger: {
+                        trigger: "#about-content",
+                        start: "top 60%",
+                        end: "bottom 80%",
+                        scrub: 1.5,
+                    }
+                });
+            }
+        });
+    </script>
+    <script src="assets/js/main.js"></script>
+</body>
+
+</html>
