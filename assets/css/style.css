@@ -17,7 +17,8 @@
 }
 
 .text-vartigo {
-    font-family: 'Vartigo';
+    font-family: 'Vartigo' !important;
+    font-weight: normal !important;
 }
 
 /* Custom styles to complement Tailwind */
@@ -101,9 +102,10 @@
 }
 
 .animate-scroller {
-    animation: scroller 25s linear infinite;
+    animation: scroller 60s linear infinite;
     display: flex;
     white-space: nowrap;
+    flex-shrink: 0;
 }
 
 .group:hover .animate-scroller {
@@ -183,4 +185,16 @@
         -webkit-transform: scale(1);
         transform: scale(1);
     }
+}
+
+.glow-pill {
+    background: linear-gradient(90deg, #F2E8FF 0%, #FFFFFF 100%);
+    border: 1px solid rgba(107, 64, 158, 0.2);
+    box-shadow: 0 0 10px rgba(107, 64, 158, 0.15);
+    transition: all 0.3s ease-in-out;
+}
+
+.glow-pill:hover {
+    box-shadow: 0 0 18px rgba(107, 64, 158, 0.3);
+    transform: translateY(-2px);
 }

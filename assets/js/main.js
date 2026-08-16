@@ -32,6 +32,33 @@ document.addEventListener('DOMContentLoaded', () => {
                 crossFade: true
             }
         });
+
+        const packagesSwiper = new Swiper('.packages-swiper', {
+            loop: false,
+            slidesPerView: 1,
+            spaceBetween: 24,
+            autoplay: {
+                delay: 4000,
+                disableOnInteraction: false,
+            },
+            pagination: {
+                el: '.packages-pagination',
+                clickable: true,
+                renderBullet: function (index, className) {
+                    return '<span class="' + className + ' custom-swiper-bullet w-3 h-3 rounded-full mx-1"></span>';
+                },
+            },
+            breakpoints: {
+                768: {
+                    slidesPerView: 2,
+                    spaceBetween: 24,
+                },
+                1024: {
+                    slidesPerView: 3,
+                    spaceBetween: 30,
+                }
+            }
+        });
     }
 
     if (typeof Fancybox !== 'undefined') {
@@ -156,8 +183,9 @@ document.addEventListener("DOMContentLoaded", () => {
         ease: "power2.out"
     });
 
-    homePackagingTl.from("#homepackaging .pack-cards", {
+    homePackagingTl.from("#homepackaging .swiper-slide", {
         opacity: 0,
+        y: 30,
         duration: 0.8,
         stagger: 0.05,
         ease: "power2.out"
@@ -252,5 +280,71 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
     });
+
+    // DYNAMIC HOME PORTFOLIO GRID IMAGE ROTATION
+    const homePortfolioLinks = document.querySelectorAll('.home-portfolio-link');
+    if (homePortfolioLinks.length > 0 && typeof PORTFOLIO_IMAGES !== 'undefined') {
+        // Compile a flat array of all image paths across all categories
+        const imagePool = [];
+        Object.keys(PORTFOLIO_IMAGES).forEach(category => {
+            const files = PORTFOLIO_IMAGES[category];
+            files.forEach(file => {
+                imagePool.push({
+                    category: category,
+                    file: file,
+                    path: `assets/images/portfolio/${category}/${file}`
+                });
+            });
+        });
+
+        if (imagePool.length > 0) {
+            // Keep track of which images are currently visible to avoid duplicates
+            const getVisiblePaths = () => {
+                const paths = [];
+                document.querySelectorAll('.home-portfolio-link').forEach(link => {
+                    paths.push(link.getAttribute('href'));
+                });
+                return paths;
+            };
+
+            // Periodically swap a random slot with an unused image
+            setInterval(() => {
+                // Pick a random card slot (0 to 11)
+                const randomIndex = Math.floor(Math.random() * homePortfolioLinks.length);
+                const cardLink = homePortfolioLinks[randomIndex];
+                const imgEl = cardLink.querySelector('img');
+
+                if (imgEl) {
+                    const visiblePaths = getVisiblePaths();
+                    // Filter pool for images that are NOT currently visible
+                    const availablePool = imagePool.filter(item => !visiblePaths.includes(item.path));
+                    
+                    if (availablePool.length > 0) {
+                        const randomImage = availablePool[Math.floor(Math.random() * availablePool.length)];
+                        
+                        // Smooth GSAP cross-fade transition
+                        gsap.to(imgEl, {
+                            opacity: 0,
+                            duration: 0.6,
+                            onComplete: () => {
+                                // Update src and lightbox links
+                                imgEl.src = randomImage.path;
+                                cardLink.href = randomImage.path;
+                                
+                                // Format nicer text for the lightbox caption
+                                const cleanName = randomImage.file.split('.')[0].replace(/-/g, ' ');
+                                cardLink.setAttribute('data-caption', `${randomImage.category.toUpperCase()} - ${cleanName}`);
+                                
+                                gsap.to(imgEl, {
+                                    opacity: 1,
+                                    duration: 0.6
+                                });
+                            }
+                        });
+                    }
+                }
+            }, 4000); // changes one random slot every 4 seconds
+        }
+    }
 
 });
