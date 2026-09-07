@@ -24,9 +24,16 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
+        // Map category key to actual folder name for case-sensitive hosting
+        const folderMap = {
+            'banner': 'Banner',
+            'brochure': 'Brochure'
+        };
+        const folder = folderMap[categoryKey] || categoryKey;
+
         // Generate and append cards
         images.forEach((imgFilename) => {
-            const imgPath = `assets/images/portfolio/${categoryKey}/${imgFilename}`;
+            const imgPath = `assets/images/portfolio/${folder}/${imgFilename}`;
             const cardLink = document.createElement('a');
             cardLink.href = imgPath;
             cardLink.setAttribute('data-fancybox', 'portfolio');
